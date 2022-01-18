@@ -15,6 +15,7 @@ class CallApiService
     {
         $this->client = $tmdbClient;
     }
+    
     // Fonction permettant de récuperer les informations sur une serie ou un film
     public function getInfo(string $query)
     {
