@@ -9,7 +9,7 @@ framework:
             tmdb.client:
                 base_uri: 'https://api.themoviedb.org/3/'
                 headers:
-                    Accept: 'application/json'
+                    Accept: 'application/json;charset=utf-8'
                     Authorization: 'Bearer %env(TOKEN_TMDB)%'
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
