@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div>
+    <h2>{{ datas.name }}</h2>
+    <p>{{ datas.overview }}</p>
+    {% for genre in datas.genres %}
+        <span>{{ genre.name }}</span>
+    {% endfor %}
+    {% for country in datas.production_countries %}
+        <span>{{ country.name }}</span>
+    {% endfor %}
+    
+    <span>{{ datas.first_air_date }}</span>
+    <img src={{ datas.poster_path }} alt="">
+</div>
+{% endblock %}

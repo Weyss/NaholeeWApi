@@ -17,11 +17,22 @@ class CallApiService
     }
     
     // Fonction permettant de récuperer les informations sur une serie ou un film
-    public function getInfo(string $query)
+    public function getInfoTv(string $query):array
     {
         $response = $this->client->request(
             'GET',
             'search/tv?query=' . $query . '&language=fr'
+        );
+        
+        return $response->toArray();
+    }
+
+    // Fonction permettant de récuperer les informations détaillées sur une serie ou un film
+    public function getDetailInfoTv(int $id):array
+    {
+        $response = $this->client->request(
+            'GET',
+            'tv/'. $id .'?language=fr'
         );
         
         return $response->toArray();
