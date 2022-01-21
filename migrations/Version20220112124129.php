@@ -24,20 +24,20 @@ final class Version20220112124129 extends AbstractMigration
         $this->addSql('ALTER TABLE film ADD statue_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE film ADD CONSTRAINT FK_8244BE221E8508FE FOREIGN KEY (statue_id) REFERENCES statue (id)');
         $this->addSql('CREATE INDEX IDX_8244BE221E8508FE ON film (statue_id)');
-        $this->addSql('ALTER TABLE movie ADD statue_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE movie ADD CONSTRAINT FK_1D5EF26F1E8508FE FOREIGN KEY (statue_id) REFERENCES statue (id)');
-        $this->addSql('CREATE INDEX IDX_1D5EF26F1E8508FE ON movie (statue_id)');
+        $this->addSql('ALTER TABLE tv ADD statue_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE tv ADD CONSTRAINT FK_1D5EF26F1E8508FE FOREIGN KEY (statue_id) REFERENCES statue (id)');
+        $this->addSql('CREATE INDEX IDX_1D5EF26F1E8508FE ON tv (statue_id)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE film DROP FOREIGN KEY FK_8244BE221E8508FE');
-        $this->addSql('ALTER TABLE movie DROP FOREIGN KEY FK_1D5EF26F1E8508FE');
+        $this->addSql('ALTER TABLE tv DROP FOREIGN KEY FK_1D5EF26F1E8508FE');
         $this->addSql('DROP TABLE statue');
         $this->addSql('DROP INDEX IDX_8244BE221E8508FE ON film');
         $this->addSql('ALTER TABLE film DROP statue_id');
-        $this->addSql('DROP INDEX IDX_1D5EF26F1E8508FE ON movie');
-        $this->addSql('ALTER TABLE movie DROP statue_id');
+        $this->addSql('DROP INDEX IDX_1D5EF26F1E8508FE ON tv');
+        $this->addSql('ALTER TABLE tv DROP statue_id');
     }
 }

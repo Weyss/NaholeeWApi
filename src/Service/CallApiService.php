@@ -28,7 +28,7 @@ class CallApiService
     }
 
     // Fonction permettant de récuperer les informations détaillées sur une serie ou un film
-    public function getDetailInfoTv(int $id):array
+    public function getDetailInfoTv($id):array
     {
         $response = $this->client->request(
             'GET',

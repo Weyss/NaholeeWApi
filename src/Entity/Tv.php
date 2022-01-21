@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\MovieRepository;
+use App\Repository\TvRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: MovieRepository::class)]
-class Movie
+#[ORM\Entity(repositoryClass: TvRepository::class)]
+class Tv
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -25,9 +25,9 @@ class Movie
     #[ORM\Column(type: 'integer')]
     #[Assert\NotBlank]
     #[Assert\Type('integer')]
-    private $idMovieTmdb;
+    private $idTvTmdb;
 
-    #[ORM\ManyToOne(targetEntity: Statue::class, inversedBy: 'movie')]
+    #[ORM\ManyToOne(targetEntity: Statue::class, inversedBy: 'tv')]
     private $statue;
 
     public function getId(): ?int
@@ -47,14 +47,14 @@ class Movie
         return $this;
     }
 
-    public function getIdMovieTmdb(): ?int
+    public function getIdTvTmdb(): ?int
     {
-        return $this->idMovieTmdb;
+        return $this->idTvTmdb;
     }
 
-    public function setIdMovieTmdb(int $idMovieTmdb): self
+    public function setIdTvTmdb(int $idTvTmdb): self
     {
-        $this->idMovieTmdb = $idMovieTmdb;
+        $this->idTvTmdb = $idTvTmdb;
 
         return $this;
     }

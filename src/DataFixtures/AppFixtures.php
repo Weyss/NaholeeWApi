@@ -4,7 +4,7 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Film;
-use App\Entity\Movie;
+use App\Entity\Tv;
 use App\Entity\Statue;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -15,7 +15,7 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create();
 
-        for($i=0; $i<3; $i++){
+        for($i=0; $i<2; $i++){
             $statue = (new Statue())
                 ->setStatue('Statue'.$i);
                 
@@ -29,12 +29,12 @@ class AppFixtures extends Fixture
                     
                 $manager->persist($film);
 
-                $movie = (new Movie())
+                $tv = (new Tv())
                         ->setTitle($faker->word())
-                        ->setIdMovieTmdb(rand(1, 500))
+                        ->setIdTvTmdb(rand(1, 500))
                         ->setStatue($statue);
 
-                $manager->persist($movie);
+                $manager->persist($tv);
             }
         }
         $manager->flush();

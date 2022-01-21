@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Movie;
+use App\Entity\Tv;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Movie|null find($id, $lockMode = null, $lockVersion = null)
- * @method Movie|null findOneBy(array $criteria, array $orderBy = null)
- * @method Movie[]    findAll()
- * @method Movie[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Tv|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Tv|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Tv[]    findAll()
+ * @method Tv[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MovieRepository extends ServiceEntityRepository
+class TvRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Movie::class);
+        parent::__construct($registry, Tv::class);
     }
 
     // /**
-    //  * @return Movie[] Returns an array of Movie objects
+    //  * @return Tv[] Returns an array of Tv objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class MovieRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Movie
+    public function findOneBySomeField($value): ?Tv
     {
         return $this->createQueryBuilder('m')
             ->andWhere('m.exampleField = :val')

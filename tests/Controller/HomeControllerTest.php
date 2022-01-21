@@ -2,6 +2,7 @@
 
 namespace App\Tests\Controller;
 
+use App\Service\CallApiService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -14,6 +15,7 @@ class HomeControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/');
+
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
@@ -24,29 +26,34 @@ class HomeControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/search');
+
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
-     * Test de la page de recherche
+     * Test de la recherche
      */
     public function testSearch(): void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/search');
         $form = $crawler->selectButton('Recherche')->form([
-            'form[query]' => ' Rugal'
+            'form[query]' => 'Rugal'
         ]);
         
         $client->submit($form);
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
-    public function testDetail():void
+    /**
+     * Test de la page de recherche des détails par rapport 
+     * à l'id
+     */
+    public function testDetailTv():void
     {
         $client = static::createClient();
-        $client->request('GET', '/detail/{id}');
-
+        $client->request('GET', '/detail-tv/{id}', ['id' => 97766]);
+        
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

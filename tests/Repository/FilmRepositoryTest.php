@@ -19,8 +19,8 @@ class FilmRepositoryTest extends KernelTestCase
      */
     public function testFindOneByTitle()
     {
-        $film = $this->getRepositoryFilm(['title' => 'enim']);
-        $this->assertSame('enim', $film->getTitle());
+        $film = $this->getRepositoryFilm(['title' => 'facilis']);
+        $this->assertSame('facilis', $film->getTitle());
     }
 
     /**
@@ -28,15 +28,15 @@ class FilmRepositoryTest extends KernelTestCase
      */
     public function testFindOneByIdTmdb()
     {
-        $film = $this->getRepositoryFilm(['idFilmTmdb' => '329']);
-        $this->assertSame(329, $film->getIdFilmTmdb());
+        $film = $this->getRepositoryFilm(['idFilmTmdb' => '21']);
+        $this->assertSame(21, $film->getIdFilmTmdb());
     }
 
     /**
      * Methode pour chercher par statue
      */
     public function testFindOneByStatue(){
-        $film = $this->getRepositoryFilm(['statue' => '38']);
-        $this->assertSame(38, $film->getStatue()->getId());
+        $film = $this->getRepositoryFilm(['statue' => '41']);
+        $this->assertSame(41, $film->getStatue()->getId());
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\TvRepository;
 use App\Service\CallApiService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,30 +22,31 @@ class HomeController extends AbstractController
     }
 
     #[Route('/search', name: 'search')]
-    public function search(Request $request, CallApiService $api)
+    public function searchTv(Request $request, CallApiService $api)
     {
-        $datas = null;
+        $data = null;
         $query = $request->request->all('form');
         
-        if($query) {
-            $datas = $api->getInfoTv($query['query']);
-        }
-        
+        if(isset($query['query']))
+            $data = $api->getInfoTv($query['query'])['results'];
+ 
         return $this->render('search.html.twig', [
             'form' => $this->searchBar(),
-            'results' => $datas['results']
+            'results' => $data
         ]);
     }
 
-    #[Route('/detail/{id}', name: 'detail')]
-    public function detailMovie(int $id, CallApiService $api)
+    #[Route('/detail-tv/{id}', name: 'detail_tv')]
+    public function detailTv($id, CallApiService $api, TvRepository $tv)
     {
-        dump($api->getDetailInfoTv($id));
-        return $this->render('detail.html.twig', [
+        dump($id);
+        return $this->render('/detail/detail-tv.html.twig', [
             'form' => $this->searchBar(),
-            'datas' => $api->getDetailInfoTv($id)
+            //'datas' => $api->getDetailInfoTv($id),
+            // 'inDb' =>  $tv->find($id)
         ]);
     }
+
     /**
      * Fonction permettant la création et l'affichage d'une barre de recherche
      */ 
