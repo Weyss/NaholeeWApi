@@ -1,24 +1,32 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{# <div>
-    <h2>{{ datas.name }}</h2>
+<div>
+    <h2>{{ data.name }}</h2>
 
-    {% if inDb == null %}
-    <span>N'est pas ajouter à votre liste</span>
+    {% if isInDatabase == null %}
+        <span>Cette serie n'est pas ajouter à votre liste</span>
+    {% else %}
+        <span>Cette serie est dans votre liste</span>    
     {% endif %}
+    <span id="js-info"></span>
+    {{form(formTv)}}
+    
+    <p>{{ data.overview }}</p>
 
-    <p>{{ datas.overview }}</p>
-
-    {% for genre in datas.genres %}
+    {% for genre in data.genres %}
         <span>{{ genre.name }}</span>
     {% endfor %}
 
-    {% for country in datas.production_countries %}
+    {% for country in data.production_countries %}
         <span>{{ country.name }}</span>
     {% endfor %}
     
-    <span>{{ datas.first_air_date }}</span>
-    <img src="https://image.tmdb.org/t/p/w500{{ datas.poster_path }}" alt="">
-</div> #}
+    <span>{{ data.first_air_date }}</span>
+    <img src="https://image.tmdb.org/t/p/w500{{ data.poster_path }}" alt="">
+</div>
 {% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/submit.js') }}"></script>
+{% endblock %}
+{# Faire un script pour faire la soumission du formulaire en ajax #}
