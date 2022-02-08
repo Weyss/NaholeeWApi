@@ -80,20 +80,30 @@ class HomeController extends AbstractController
         ]);
     }
 
-
-
-    // Ajouter la méthode qui ajoute une serie (voir vidéo Lior)
     #[Route('/management-tv/{id}', name: 'management_tv')]
-    public function addTv(int $id, CallApiService $api, StatueRepository $statueRepo, TvRepository $tvRepo, EntityManagerInterface $em): JsonResponse
+    /**
+     * Méthode de gestion d'ajout et d'édition d'une serie
+     *
+     * @param integer $id
+     * @param CallApiService $api
+     * @param StatueRepository $statueRepo
+     * @param TvRepository $tvRepo
+     * @param EntityManagerInterface $em
+     * @return JsonResponse
+     */
+    public function managementTv(Request $request, int $id, CallApiService $api, StatueRepository $statueRepo, TvRepository $tvRepo, EntityManagerInterface $em): JsonResponse
     {
-        $data = $api->getDetailInfoTv($id);
+        $ajaxRequest = $request->request->all();
 
+        $data = $api->getDetailInfoTv($id);
+        
         /** @var Tv $tv */
         $tv = $tvRepo->findOneBy(['idTvTmdb' => $id]);
 
         /** @var Statue $statue */
-        $statue = $statueRepo->findOneBy(['id' => $_POST['tv']['statue']]);
-        
+        if(isset($ajaxRequest['tv']))
+            $statue = $statueRepo->findOneBy(['id' => $ajaxRequest['tv']['statue']]);
+            
         if(!$tv){
             $tv = (new Tv())->setTitle($data['name'])
                             ->setIdTvTmdb($id)
@@ -102,7 +112,7 @@ class HomeController extends AbstractController
             $em->persist($tv);
             $em->flush();
         
-            return $this->json("La série a été ajouter à votre liste", 200); 
+            return $this->json("Ajouter", 200); 
         } 
         else 
         {
@@ -111,7 +121,7 @@ class HomeController extends AbstractController
             $em->persist($tv);
             $em->flush();
 
-            return $this->json("Le statue de la serie à bien été modifié", 200);
+            return $this->json("Modifier", 200);
         }          
     }
     

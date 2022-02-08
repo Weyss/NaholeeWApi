@@ -26,6 +26,8 @@ class HomeControllerTest extends WebTestCase
 
     /**
      * Test de la page d'acceuil
+     * 
+     * @return void
      */
     public function testHomePage(): void
     {
@@ -35,15 +37,19 @@ class HomeControllerTest extends WebTestCase
     
     /**
      * Test de la page de recherche
+     * 
+     * @return void
      */
     public function testSearchPage(): void
     {
         $this->getClient('GET', '/search');
-        self::assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
      * Test de la recherche
+     * 
+     * @return void
      */
     public function testSearch(): void
     {
@@ -58,6 +64,8 @@ class HomeControllerTest extends WebTestCase
     /** 
      * Test de la page de recherche des détails par rapport 
      * à l'id
+     * 
+     * @return void
      */
     public function testDetailTvPage():void
     {
@@ -65,9 +73,17 @@ class HomeControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
     
-    public function testAddTv()
-    {
-        $this->getClient('GET', 'add-tv/97766');
+    /**
+     * Test de la soumission
+     *
+     * @return void
+     */
+    public function testManagementTvSubmit(){
+        $client = static::createClient();
+        $client->xmlHttpRequest('POST', '/management-tv/97766', [
+            'tv' => ['statue' => 1]
+        ]);
+        
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

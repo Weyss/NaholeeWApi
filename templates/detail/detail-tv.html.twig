@@ -5,9 +5,9 @@
     <h2>{{ data.name }}</h2>
 
     {% if isInDatabase == null %}
-        <span>Cette serie n'est pas ajouter à votre liste</span>
+        <span class="alert" >Cette serie n'est pas ajouter à votre liste</span>
     {% else %}
-        <span>Cette serie est dans votre liste</span>    
+        <span class="alert" >Cette serie est dans votre liste</span>    
     {% endif %}
     <span id="js-info"></span>
     {{form(formTv)}}
@@ -29,4 +29,3 @@
 {% block javascripts %}
     <script src="{{ asset('js/submit.js') }}"></script>
 {% endblock %}
-{# Faire un script pour faire la soumission du formulaire en ajax #}
