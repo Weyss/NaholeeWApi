@@ -16,7 +16,13 @@ class CallApiService
         $this->client = $tmdbClient;
     }
     
-    // Fonction permettant de récuperer les informations sur une serie ou un film
+    /**
+     * Méthode pour récupérer les informations
+     * d'une serie
+     *
+     * @param string $query
+     * @return array
+     */
     public function getInfoTv(string $query):array
     {
         $response = $this->client->request(
@@ -27,8 +33,14 @@ class CallApiService
         return $response->toArray();
     }
 
-    // Fonction permettant de récuperer les informations détaillées sur une serie ou un film
-    public function getDetailInfoTv($id):array
+    /**
+     * Méthode pour récupérer les détails
+     * d'une serie
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getDetailInfoTv(int $id):array
     {
         $response = $this->client->request(
             'GET',
