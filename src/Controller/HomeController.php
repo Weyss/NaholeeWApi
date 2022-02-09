@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Tv;
+use App\Entity\Film;
 use App\Form\TvType;
 use App\Entity\Statue;
-use App\Repository\StatueRepository;
+use App\Form\FilmType;
 use App\Service\CallApiService;
 use App\Repository\TvRepository;
+use App\Repository\FilmRepository;
+use App\Repository\StatueRepository;
 use Symfony\Component\Form\FormView;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,23 +38,28 @@ class HomeController extends AbstractController
 
     #[Route('/search', name: 'search')]
     /**
-     * Méthode obtenir la recherche
+     * Méthode obtenir les reultats de la recherche
      *
      * @param Request $request
      * @param CallApiService $api
      * @return Response
      */
-    public function searchTv(Request $request, CallApiService $api): Response
+    public function search(Request $request, CallApiService $api): Response
     {
-        $data = null;
+        $dataTv= null;
+        $dataFilm = null;
         $query = $request->request->all('form');
         
         if(isset($query['query']))
-            $data = $api->getInfoTv($query['query'])['results'];
- 
+        {
+            $dataTv = $api->getInfoTv($query['query'])['results'];
+            $dataFilm = $api->getInfoFilm($query['query'])['results'];
+        }
+          
         return $this->render('search.html.twig', [
             'form' => $this->searchBar(),
-            'results' => $data
+            'resultsTv' => $dataTv,
+            'resultsFilm' => $dataFilm
         ]);
     }
     
@@ -67,8 +75,8 @@ class HomeController extends AbstractController
     public function detailTv(int $id, CallApiService $api, TvRepository $tvRepo): Response
     {
         $form = $this->createForm(TvType::class, null, [
-            'action' => $this->generateUrl('management_tv', [
-            'id' => $id
+            'action' => $this->generateUrl('management', [
+                'id' => $id
             ])
         ]);
          
@@ -80,10 +88,28 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/management-tv/{id}', name: 'management_tv')]
+    #[Route('/detail-film/{id}', name: 'detail_film')]
+    public function detailFilm(int $id, CallApiService $api, FilmRepository $filmRepo): Response
+    {
+        $form = $this->createForm(FilmType::class, null, [
+            'action' => $this->generateUrl('management', [
+                'id' => $id
+            ])
+        ]);
+
+        return $this->render('/detail/detail-film.html.twig', [
+            'form' => $this->searchBar(),
+            'data' => $api->getDetailInfoFilm($id),
+            'isInDatabase' => $filmRepo->findOneBy(['idFilmTmdb' => $id]),
+            'formFilm' => $form->createView()
+        ]);
+    }
+
+    #[Route('/management/{id}', name: 'management')]
     /**
      * Méthode de gestion d'ajout et d'édition d'une serie
      *
+     * @param Request $request
      * @param integer $id
      * @param CallApiService $api
      * @param StatueRepository $statueRepo
@@ -91,38 +117,66 @@ class HomeController extends AbstractController
      * @param EntityManagerInterface $em
      * @return JsonResponse
      */
-    public function managementTv(Request $request, int $id, CallApiService $api, StatueRepository $statueRepo, TvRepository $tvRepo, EntityManagerInterface $em): JsonResponse
+    public function management(Request $request, int $id, CallApiService $api, StatueRepository $statueRepo, TvRepository $tvRepo, FilmRepository $filmRepo, EntityManagerInterface $em): JsonResponse
     {
         $ajaxRequest = $request->request->all();
-
-        $data = $api->getDetailInfoTv($id);
         
-        /** @var Tv $tv */
-        $tv = $tvRepo->findOneBy(['idTvTmdb' => $id]);
-
         /** @var Statue $statue */
-        if(isset($ajaxRequest['tv']))
-            $statue = $statueRepo->findOneBy(['id' => $ajaxRequest['tv']['statue']]);
-            
-        if(!$tv){
-            $tv = (new Tv())->setTitle($data['name'])
-                            ->setIdTvTmdb($id)
-                            ->setStatue($statue);
-        
-            $em->persist($tv);
-            $em->flush();
-        
-            return $this->json("Ajouter", 200); 
-        } 
-        else 
+        switch($ajaxRequest) 
         {
-            $tv->setStatue($statue);
+            case isset($ajaxRequest['tv']):
+                $statue = $statueRepo->find($ajaxRequest['tv']['statue']);
 
-            $em->persist($tv);
-            $em->flush();
+                /** @var Tv $tv */
+                $tv = $tvRepo->findOneBy(['idTvTmdb' => $id]);
 
-            return $this->json("Modifier", 200);
-        }          
+                if(!$tv){
+                    $tv = (new Tv())->setTitle($api->getDetailInfoTv($id)['name'])
+                                    ->setIdTvTmdb($id)
+                                    ->setStatue($statue);
+            
+                    $em->persist($tv);
+                    $em->flush();
+            
+                    return $this->json("Ajouter", 200); 
+                } 
+                else 
+                {
+                    $tv->setStatue($statue);
+
+                    $em->persist($tv);
+                    $em->flush();
+
+                    return $this->json("Modifier", 200);
+                }
+            break;
+            case isset($ajaxRequest['film']):
+                $statue = $statueRepo->find($ajaxRequest['film']['statue']);
+
+                /** @var Film $film */
+                $film = $filmRepo->findOneBy(['idFilmTmdb' => $id]);
+
+                if(!$film){
+                    $film = (new Film())->setTitle($api->getDetailInfoFilm($id)['title'])
+                                        ->setIdFilmTmdb($id)
+                                        ->setStatue($statue);
+            
+                    $em->persist($film);
+                    $em->flush();
+            
+                    return $this->json("Ajouter", 200); 
+                } 
+                else 
+                {
+                    $film->setStatue($statue);
+
+                    $em->persist($film);
+                    $em->flush();
+
+                    return $this->json("Modifier", 200);
+                } 
+            break;
+        }  
     }
     
     /**
