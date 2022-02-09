@@ -28,21 +28,21 @@ class StatueRepositoryTest extends KernelTestCase
      */
     public function testTitleFilm()
     {
-        $query = $this->getRepositoryStatue()->findTitleByIdStatue('film', 'f', 38);
+        $query = $this->getRepositoryStatue()->findTitleByIdStatue('film', 'f', 40);
         $film = $query[0]->getFilm();
         foreach($film as $data)
-            $this->assertSame('enim', $data->getTitle());
+            $this->assertSame('possimus', $data->getTitle());
     }
 
     /**
      * Méthode pour chercher un titre
      * en fonction de l'id du statue
      */
-    public function testTitleMovie()
+    public function testTitleTv()
     {
-        $query = $this->getRepositoryStatue()->findTitleByIdStatue('movie', 'm', 38);
-        $movie = $query[0]->getMovie();
-        foreach($movie as $data)
-            $this->assertSame('est', $data->getTitle());
+        $query = $this->getRepositoryStatue()->findTitleByIdStatue('tv', 't', 40);
+        $tv = $query[0]->getTv();
+        foreach($tv as $data)
+            $this->assertSame('eum', $data->getTitle());
     }
 }

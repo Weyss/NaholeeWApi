@@ -15,13 +15,70 @@ class CallApiService
     {
         $this->client = $tmdbClient;
     }
-    
-    // Fonction permettant de récuperer les informations sur une serie ou un film
-    public function getInfo(string $query)
+
+    /**
+     * Méthode pour récupérer les informations
+     * d'une serie
+     *
+     * @param string $query
+     * @return array
+     */
+    public function getInfoTv(string $query):array
     {
         $response = $this->client->request(
             'GET',
             'search/tv?query=' . $query . '&language=fr'
+        );
+        
+        return $response->toArray();
+    }
+
+    /**
+     * Méthode pour récupérer les détails
+     * d'une serie
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getDetailInfoTv(int $id):array
+    {
+        $response = $this->client->request(
+            'GET',
+            'tv/'. $id .'?language=fr'
+        );
+        
+        return $response->toArray();
+    }
+
+    /**
+     * Méthode pour récupérer les informations
+     * d'un film
+     *
+     * @param string $query
+     * @return array
+     */
+    public function getInfoFilm(string $query):array
+    {
+        $response = $this->client->request(
+            'GET',
+            'search/movie?query=' . $query . '&language=fr'
+        );
+        
+        return $response->toArray();
+    }
+
+    /**
+     * Méthode pour récupérer les détails
+     * d'un film
+     *
+     * @param integer $id
+     * @return array
+     */
+    public function getDetailInfoFilm(int $id):array
+    {
+        $response = $this->client->request(
+            'GET',
+            'movie/'. $id .'?language=fr'
         );
         
         return $response->toArray();

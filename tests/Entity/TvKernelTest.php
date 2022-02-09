@@ -2,28 +2,28 @@
 
 namespace App\Tests\Entity;
 
-use App\Entity\Movie;
+use App\Entity\Tv;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class MovieKernelTest extends KernelTestCase
+class TvKernelTest extends KernelTestCase
 {
     /**
-     * Créé un nouveau Movie
+     * Créé un nouveau Tv
      */
-    public function getMovie(): Movie
+    public function getTv(): Tv
     {
-        return (new Movie)->setTitle("Rugal")
-                        ->setIdMovieTmdb(192304);
+        return (new Tv)->setTitle("Rugal")
+                        ->setIdTvTmdb(192304);
     }
 
     /**
      * Assert pour les erreurs et envoye des messages si c'est le cas
      */
-    public function assertErrors(int $number, Movie $movie): void
+    public function assertErrors(int $number, Tv $tv): void
     {
         self::bootKernel();
-        $errors = static::getContainer()->get(ValidatorInterface::class)->validate($movie);
+        $errors = static::getContainer()->get(ValidatorInterface::class)->validate($tv);
         $messages = [];
         /** @var ConstraintViolation $error */
         foreach($errors as $error){
@@ -37,14 +37,14 @@ class MovieKernelTest extends KernelTestCase
      */
     public function testValidFilm()
     {
-        $this->assertErrors(0, $this->getMovie());
+        $this->assertErrors(0, $this->getTv());
     }
 
     /**
      * Test si le titre est vide
      */
     public function testInvalidBlankTitle(){
-        $this->assertErrors(1, $this->getMovie()->setTitle(""));
+        $this->assertErrors(1, $this->getTv()->setTitle(""));
     }
 
     /**
@@ -58,7 +58,7 @@ class MovieKernelTest extends KernelTestCase
      * Test si le titre ne dépasse pas le nombre de caratères
      */
     public function testInvalidLengthTitle(){
-        $this->assertErrors(1, $this->getMovie()->setTitle("
+        $this->assertErrors(1, $this->getTv()->setTitle("
             Lorem ipsum dolor sit amet. Non voluptates inventore aut eveniet repudiandae ut omnis dolorem! 
             Ad aliquam reprehenderit eos voluptas aspernatur aut voluptatem amet?
             Ea quis minus sed harum similique ad modi sint a assumenda tempore et temporibus omnis ut sint nisi ad iusto provident. 

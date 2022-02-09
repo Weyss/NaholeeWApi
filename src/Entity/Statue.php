@@ -27,13 +27,13 @@ class Statue
     #[ORM\OneToMany(mappedBy: 'statue', targetEntity: Film::class)]
     private $film;
 
-    #[ORM\OneToMany(mappedBy: 'statue', targetEntity: Movie::class)]
-    private $movie;
+    #[ORM\OneToMany(mappedBy: 'statue', targetEntity: Tv::class)]
+    private $tv;
 
     public function __construct()
     {
         $this->film = new ArrayCollection();
-        $this->movie = new ArrayCollection();
+        $this->tv = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,29 +84,29 @@ class Statue
     }
 
     /**
-     * @return Collection|Movie[]
+     * @return Collection|Tv[]
      */
-    public function getMovie(): Collection
+    public function getTv(): Collection
     {
-        return $this->movie;
+        return $this->tv;
     }
 
-    public function addMovie(Movie $movie): self
+    public function addMovTvie(Tv $tv): self
     {
-        if (!$this->movie->contains($movie)) {
-            $this->movie[] = $movie;
-            $movie->setStatue($this);
+        if (!$this->tv->contains($tv)) {
+            $this->tv[] = $tv;
+            $tv->setStatue($this);
         }
 
         return $this;
     }
 
-    public function removeMovie(Movie $movie): self
+    public function removeTv(Tv $tv): self
     {
-        if ($this->movie->removeElement($movie)) {
+        if ($this->tv->removeElement($tv)) {
             // set the owning side to null (unless already changed)
-            if ($movie->getStatue() === $this) {
-                $movie->setStatue(null);
+            if ($tv->getStatue() === $this) {
+                $tv->setStatue(null);
             }
         }
 

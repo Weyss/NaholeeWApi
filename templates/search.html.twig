@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% for result in resultsTv %}
+<div>
+    <a href="{{ path('detail_tv', {id:result.id}) }}">{{ result.name }}</a>
+</div>
+{% endfor %}
+
+{% for result in resultsFilm %}
+<div>
+    <a href="{{ path('detail_film', {id:result.id}) }}">{{ result.title }}</a>
+</div>
+{% endfor %}
+
+
+
+{% endblock %}

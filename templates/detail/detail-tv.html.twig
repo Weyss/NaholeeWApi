@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div>
+    <h2>{{ data.name }}</h2>
+
+    {% if isInDatabase == null %}
+        <span class="alert" >Cette serie n'est pas ajouter à votre liste</span>
+    {% else %}
+        <span class="alert" >Cette serie est dans votre liste</span>    
+    {% endif %}
+    <span id="js-info"></span>
+    {{form(formTv)}}
+    
+    <p>{{ data.overview }}</p>
+
+    {% for genre in data.genres %}
+        <span>{{ genre.name }}</span>
+    {% endfor %}
+
+    {% for country in data.production_countries %}
+        <span>{{ country.name }}</span>
+    {% endfor %}
+    
+    <span>{{ data.first_air_date }}</span>
+    <img src="https://image.tmdb.org/t/p/w500{{ data.poster_path }}" alt="">
+</div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/submit.js') }}"></script>
+{% endblock %}
