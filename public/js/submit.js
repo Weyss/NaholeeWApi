@@ -8,10 +8,6 @@ function radio()
     })
 }
 
-function data(){
-    
-}
-
 function submit()
 {
     const httpRequest = new XMLHttpRequest();

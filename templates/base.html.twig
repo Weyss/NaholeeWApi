@@ -11,7 +11,23 @@
     <body>
     {{form(form)}}
     <h1>Hello World</h1>
+    <nav>
+        <ul>
+            <li><a class="category">Japonais</a></li>
+            <li><a class="category">Chinois</a></li>
+            <li><a class="category">Taiwan</a></li>
+            <li><a class="category"></a></li>
+            <li><a class="category"></a></li>
+            <li><a class="category"></a></li>
+            <li><a class="category"></a></li>
+        </ul>
+    </nav>
+    
+
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+        <script src="https://unpkg.com/rxjs@^7/dist/bundles/rxjs.umd.min.js"></script>
+        <script src="{{ asset('js/rxjs.js') }}"></script>
+        {% endblock %}
     </body>
 </html>
