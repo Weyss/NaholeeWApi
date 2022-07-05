@@ -1,17 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-{% for result in resultsTv %}
-<div>
-    <a href="{{ path('detail_tv', {id:result.id}) }}">{{ result.name }}</a>
-</div>
-{% endfor %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/search.css') }}">
+{% endblock %}
 
-{% for result in resultsFilm %}
-<div>
-    <a href="{{ path('detail_film', {id:result.id}) }}">{{ result.title }}</a>
-</div>
-{% endfor %}
+{% block body %}
+<main>
+    <h2>Séries</h2>
+    <ul>
+        {% for result in resultsTv %}
+        <li><a href="{{ path('detail_tv', {id:result.id}) }}">{{ result.name }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <h2>Film</h2>
+    <ul>
+        {% for result in resultsFilm %}
+        <li><a href="{{ path('detail_film', {id:result.id}) }}">{{ result.title }}</a></li>
+        {% endfor %}
+    </ul>
+</main>
+
 
 
 
