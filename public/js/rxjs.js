@@ -1,31 +1,138 @@
-const { fromEvent } = rxjs;
+const { fromEvent, map } = rxjs;
 
-// Constantes liées au script
-const categories = document.querySelectorAll('.category');
-const click$ = fromEvent (categories, 'click');
 
-// Code
-click$.forEach(e => {
-    let target = e.target;
-    let ul = document.createElement('ul');
-    let livu = document.createElement('li');
-    let livoir = document.createElement('li');
-    let avu = document.createElement('a');
-    let avoir = document.createElement('a');
-    
-    e.preventDefault();
+// function subMenu () {
+//     // Constantes liées au script
+//     const categories = document.querySelectorAll('.category');
+//     const click$ = fromEvent (categories, 'click');
+//     let actuallyTarget = null;
+//     // Code
+//     click$
+//     .pipe(map(e => e.target))
+//     .subscribe((target) =>  {
+//         if (!target.classList.contains("js-actived") && actuallyTarget == null){
+//                actived(target);
+//                actuallyTarget = target;
+//             }
+//         else if (actuallyTarget.classList.contains("js-actived") && actuallyTarget != target){
+//             target.classList.add("js-actived");
+//             actived(target);
+//             removeActuallyTarget(actuallyTarget);
+//             actuallyTarget = target;
+//         }
+//         else if (actuallyTarget.classList.contains("js-actived") && actuallyTarget == target){
+//             removeActuallyTarget(actuallyTarget);
+//             actuallyTarget = null;
+//         }      
+//     })
+// }
 
-    // Création du sous-menu
-    if (target.parentElement.children.length < 2){
-        // Création du lien Vu & insertion du texte
-        target.parentElement.appendChild(ul).appendChild(livu).appendChild(avu).setAttribute('href', '{{ patch(\'vu\') }}');
-        avu.innerText = 'Vu';
-        // Création du lien A voir & insertion du texte
-        target.parentElement.appendChild(ul).appendChild(livoir).appendChild(avoir).setAttribute('href', '{{ patch(\'avoir\') }}');
-        avoir.innerText = 'A Voir';
-    } 
-    // Suppression du sous-menu
-    else {
-       target.parentElement.removeChild(target.parentElement.lastChild)
-    }
-});
+// function actived (target) {
+//     // Création des éléments pour le sous-menu
+//     let ul = document.createElement('ul');
+//     let livu = document.createElement('li');
+//     let livoir = document.createElement('li');
+//     let avu = document.createElement('a');
+//     let avoir = document.createElement('a');
+
+//     target.classList.add("js-actived");
+ 
+//     target.appendChild(ul).appendChild(livu).appendChild(avu).setAttribute('href', '{{ patch(\'vu\') }}');
+//     avu.innerText = 'Vu';
+//     target.appendChild(ul).appendChild(livoir).appendChild(avoir).setAttribute('href', '{{ patch(\'avoir\') }}');
+//     avoir.innerText = 'A Voir';
+
+//     return target;
+// }
+
+// function removeActuallyTarget(actuallyTarget) {
+//     // Suppréssion du sous-menu
+//     actuallyTarget.classList.remove("js-actived");
+//     actuallyTarget.removeChild(actuallyTarget.lastChild);
+
+//     return actuallyTarget;
+// }
+
+
+function subMenu() {
+    const categories = document.querySelectorAll('.category');
+    const mouseEnter$ = fromEvent (categories, 'mouseenter');
+    const mouseLeave$ = fromEvent (categories, 'mouseleave');
+
+    mouseEnter$
+    .subscribe(e => {
+       let target = e.target
+       
+        if(target.children.length < 1){
+            // Création des éléments pour le sous-menu
+            let ul = document.createElement('ul');
+            let livu = document.createElement('li');
+            let livoir = document.createElement('li');
+            let avu = document.createElement('a');
+            let avoir = document.createElement('a');
+
+            target.appendChild(ul).appendChild(livu).appendChild(avu).setAttribute('href', '{{ patch(\'vu\') }}');
+            avu.innerText = 'Vu';
+            target.appendChild(ul).appendChild(livoir).appendChild(avoir).setAttribute('href', '{{ patch(\'avoir\') }}');
+            avoir.innerText = 'A Voir';
+        }
+        
+        e.stopPropagation();  
+    });
+
+    mouseLeave$
+    .pipe(map(e => e.target))
+    .subscribe((target) => {
+        console.log(target);
+        target.classList.remove("js-actived");
+        target.removeChild(target.lastChild);
+    })
+}
+
+document.addEventListener('DOMContentLoaded', subMenu);
+
+// Le Code fonctionne, mais ce n'est pas la bonne méthode
+// le forEach est utilisé en cas de promesse (ex : requète HTTP)
+// cf doc : https://rxjs.dev/api/index/class/Observable
+// click$.forEach(e => {
+    //     let target = e.target;
+    //     let ul = document.createElement('ul');
+    //     let livu = document.createElement('li');
+    //     let livoir = document.createElement('li');
+    //     let avu = document.createElement('a');
+    //     let avoir = document.createElement('a');
+        
+    //     console.log(actuallyTarget);
+    //     // Création du sous-menu
+
+    //     // Suppression du sous-menu
+    //     if (!target.classList.contains("js-actived") && actuallyTarget == null){
+    //             target.classList.add("js-actived");
+    //             // Création du lien Vu & insertion du texte
+    //             target.appendChild(ul).appendChild(livu).appendChild(avu).setAttribute('href', '{{ patch(\'vu\') }}');
+    //             avu.innerText = 'Vu';
+    //             // Création du lien A voir & insertion du texte
+    //             target.appendChild(ul).appendChild(livoir).appendChild(avoir).setAttribute('href', '{{ patch(\'avoir\') }}');
+    //             avoir.innerText = 'A Voir';
+    //             actuallyTarget = target;
+    //         }
+    //     else if (actuallyTarget.classList.contains("js-actived") && actuallyTarget != target){
+    //         actuallyTarget.classList.remove("js-actived");
+    //         actuallyTarget.removeChild(actuallyTarget.lastChild);
+    //         target.classList.add("js-actived");
+        
+    //         // Création du lien Vu & insertion du texte
+    //         target.appendChild(ul).appendChild(livu).appendChild(avu).setAttribute('href', '{{ patch(\'vu\') }}');
+    //         avu.innerText = 'Vu';
+    //         // Création du lien A voir & insertion du texte
+    //         target.appendChild(ul).appendChild(livoir).appendChild(avoir).setAttribute('href', '{{ patch(\'avoir\') }}');
+    //         avoir.innerText = 'A Voir';
+    //         actuallyTarget = target;
+    //     }
+    //     else if (actuallyTarget.classList.contains("js-actived") && actuallyTarget == target){
+    //         actuallyTarget.classList.remove("js-actived");
+    //         actuallyTarget.removeChild(actuallyTarget.lastChild);
+    //         actuallyTarget = null;
+    //         console.log(actuallyTarget);
+    //     }        
+    // });

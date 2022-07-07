@@ -1,40 +1,47 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('css/detail-tv.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/detail.css') }}">
 {% endblock %}
 
 {% block body %}
 <main>
-    <h2>{{ data.name }}</h2>
+    <article>
+        <h2>{{ data.name }}</h2>
 
-    <div>
-        {% if isInDatabase == null %}
+        <div>
+            {% if isInDatabase == null %}
             <span class="alert" >Cette serie n'est pas ajouter à votre liste</span>
-        {% else %}
+            {% else %}
             <span class="alert" >Cette serie est dans votre liste</span>    
-        {% endif %}
-        {{form(formTv)}}
-    </div>
-    
-    <span id="js-info"></span>
+            {% endif %}
+            {{form(formTv)}}
+        </div>
+        
+        <span id="js-info"></span>
 
-    <p>{{ data.overview }}</p>
+        <p>{{ data.overview }}</p>
 
-    <ul id="genre">
-        {% for genre in data.genres %}
-        <li>{{ genre.name }}</li>
-        {% endfor %}
-    </ul>
-    
-    <ul id="country">
-        {% for country in data.production_countries %}
-        <li>{{ country.name }}</li>
-        {% endfor %}
-    </ul>
-    
-    <span id="datetime">{{ data.first_air_date }}</span>
-    <img src="https://image.tmdb.org/t/p/w500{{ data.poster_path }}" alt="">
+        <ul id="genre">
+            {% for genre in data.genres %}
+            <li>{{ genre.name }}</li>
+            {% endfor %}
+        </ul>
+        
+        <ul id="country">
+            {% for country in data.production_countries %}
+            <li>{{ country.name }}</li>
+            {% endfor %}
+        </ul>
+
+        <div id="infos">
+            <span>Date de sortie : {{ data.first_air_date }}</span>
+            <span>Nombre de saisons : {{data.number_of_seasons}}</span>
+            <span>Nombre d'épisodes : {{data.number_of_episodes}}</span>
+        </div>
+        
+        <img src="https://image.tmdb.org/t/p/w500{{ data.poster_path }}" alt="">
+    </article>
 </main>
 {% endblock %}
 
