@@ -1,0 +1,83 @@
+@import 'reset';
+
+// CODE GLOBAL
+li{
+    list-style-type: none;
+}
+
+// CODE SPECIFIQUE
+body{
+    display: grid;
+    grid-template-rows: auto 75vh;
+    grid-gap: 25px;
+}
+
+header{
+    display: grid;
+    grid-template-columns: repeat(27,1fr);
+    grid-template-rows: repeat(2, auto) 100px;
+
+    h1{
+        grid-column: 2/27;
+        text-align: center;
+        font-size: 4rem;
+    }
+}
+
+nav{
+    grid-column: 2/27;
+    margin: 25px;
+    ul:first-child{
+        display: flex;
+        justify-content: space-around;
+
+        li{
+            cursor: pointer;
+<<<<<<< HEAD
+            font-size: 1.4rem;
+            
+            ul{
+                display: block;
+=======
+
+            a{
+                font-size: 1.4rem;
+            }
+
+            ul{
+>>>>>>> 31833efc2c542d688d50b6df81da23f83dd11365
+                li{
+                    a{
+                        font-size: 1.1rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#search{
+    grid-column: 2/27;
+    display: flex;
+    justify-content: end;
+
+    button {
+        margin-left: 10px;
+    }
+}
+
+footer{
+    grid-row: -1;
+    display: flex;
+    justify-content: center;
+    
+    a{
+        margin: 0 15px 0 15px;
+        &:first-child{
+        align-self: center;
+        }
+        &:last-child{
+            width: 5%;
+        }
+    }
+}

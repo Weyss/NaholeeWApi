@@ -79,7 +79,7 @@ class HomeController extends AbstractController
                 'id' => $id
             ])
         ]);
-         
+        
         return $this->render('/detail/detail-tv.html.twig', [
             'form' => $this->searchBar(),
             'data' => $api->getDetailInfoTv($id),
@@ -89,6 +89,14 @@ class HomeController extends AbstractController
     }
 
     #[Route('/detail-film/{id}', name: 'detail_film')]
+    /**
+     * Méthode pour afficher les détails d'un film
+     *
+     * @param integer $id
+     * @param CallApiService $api
+     * @param FilmRepository $filmRepo
+     * @return Response
+     */
     public function detailFilm(int $id, CallApiService $api, FilmRepository $filmRepo): Response
     {
         $form = $this->createForm(FilmType::class, null, [
@@ -107,13 +115,14 @@ class HomeController extends AbstractController
 
     #[Route('/management/{id}', name: 'management')]
     /**
-     * Méthode de gestion d'ajout et d'édition d'une serie
+     * Méthode d'ajout ou d'édition d'une série / film
      *
      * @param Request $request
      * @param integer $id
      * @param CallApiService $api
      * @param StatueRepository $statueRepo
      * @param TvRepository $tvRepo
+     * @param FilmRepository $filmRepo
      * @param EntityManagerInterface $em
      * @return JsonResponse
      */

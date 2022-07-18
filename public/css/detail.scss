@@ -1,0 +1,59 @@
+@import 'base';
+
+article{
+    display: grid;
+    grid-template-columns: repeat(27, 1fr);
+    grid-template-rows: repeat(16, 50px);
+
+    h2{
+        grid-area: 1/9/2/20;
+        justify-self: center;
+        align-self: center;
+    }
+
+    div{
+        grid-area: 3/15/4/20;
+        display: flex;
+        
+        form {
+            display: flex;
+            
+            div{
+                align-self: baseline;
+            }
+        }
+    }
+
+    .alert{
+        grid-area: 4/15/5/20;
+    }
+
+    p{
+        grid-area: 9/15/18/22;
+    }
+
+    #genre{
+        grid-area: 6/15/6/20;
+    }
+
+    #country{
+        grid-area: 7/15/7/20;
+    }
+
+    img{
+        width: 100%;
+        grid-column: 9/14;
+        grid-row: 3;
+    }
+
+    // SPECIFIQUE A DETAIL-TV
+    #infos{
+        display: flex;
+        grid-column: 15/20;
+        grid-row: 5;
+        
+    }
+}
+
+
+

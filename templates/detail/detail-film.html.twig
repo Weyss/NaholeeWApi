@@ -1,32 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-<div>
-    <h2>{{ data.title }}</h2>
-
-    {% if isInDatabase == null %}
-        <span class="alert" >Cette serie n'est pas ajouter à votre liste</span>
-    {% else %}
-        <span class="alert" >Cette serie est dans votre liste</span>    
-    {% endif %}
-    <span id="js-info"></span>
-
-    {{form(formFilm)}}
-    
-    <p>{{ data.overview }}</p>
-
-    {% for genre in data.genres %}
-        <span>{{ genre.name }}</span>
-    {% endfor %}
-
-    {% for country in data.production_countries %}
-        <span>{{ country.name }}</span>
-    {% endfor %}
-    
-    <span>{{ data.release_date }}</span>
-    <img src="https://image.tmdb.org/t/p/w500{{ data.poster_path }}" alt="">
-</div>
+{% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/detail.css') }}">
 {% endblock %}
+
+{% block body %}
+<main>
+    <article>
+        <h2>{{ data.title }}</h2>
+
+        <div>
+            {# <span id="js-info"></span> #}
+            {{form_start(formFilm)}}
+                {% if isInDatabase == null %}
+                    {{form_row(formFilm.statue[1])}}
+                    {{form_row(formFilm.statue[2])}}
+                {% elseif isInDatabase.statue.statue == "A voir" %}
+                    {{form_row(formFilm.statue[1], {'attr': {'checked':'checked'}})}}
+                    {{form_row(formFilm.statue[2])}}
+                {% elseif isInDatabase.statue.statue == "Vu" %}
+                    {{form_row(formFilm.statue[1])}}
+                    {{form_row(formFilm.statue[2], {'attr': {'checked':'checked'}})}}
+                {% endif %}
+            {{form_start(formFilm)}}
+        </div>
+            
+        <p>{{ data.overview }}</p>
+
+        <ul id="genre">
+            {% for genre in data.genres %}
+            <li>{{ genre.name }}</li>
+            {% endfor %}
+        </ul>
+            
+        <ul id="country">
+            {% for country in data.production_countries %}
+            <li>{{ country.name }}</li>
+            {% endfor %}
+        </ul>
+            
+        <span id="infos">{{ data.release_date }}</span>
+        <img src="https://image.tmdb.org/t/p/w500{{ data.poster_path }}" alt="">
+    </article>
+</main>
+{% endblock %}
+
 {% block javascripts %}
     <script src="{{ asset('js/submit.js') }}"></script>
 {% endblock %}
