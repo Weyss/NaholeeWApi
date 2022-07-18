@@ -10,18 +10,23 @@
         <h2>{{ data.title }}</h2>
 
         <div>
-            {% if isInDatabase == null %}
-            <span class="alert" >Cette serie n'est pas ajouter à votre liste</span>
-            {% else %}
-            <span class="alert" >Cette serie est dans votre liste</span>    
-            {% endif %}
-            {{form(formFilm)}}
+            {# <span id="js-info"></span> #}
+            {{form_start(formFilm)}}
+                {% if isInDatabase == null %}
+                    {{form_row(formFilm.statue[1])}}
+                    {{form_row(formFilm.statue[2])}}
+                {% elseif isInDatabase.statue.statue == "A voir" %}
+                    {{form_row(formFilm.statue[1], {'attr': {'checked':'checked'}})}}
+                    {{form_row(formFilm.statue[2])}}
+                {% elseif isInDatabase.statue.statue == "Vu" %}
+                    {{form_row(formFilm.statue[1])}}
+                    {{form_row(formFilm.statue[2], {'attr': {'checked':'checked'}})}}
+                {% endif %}
+            {{form_start(formFilm)}}
         </div>
             
-            
-            <span id="js-info"></span>
+        <p>{{ data.overview }}</p>
 
-            <p>{{ data.overview }}</p>
         <ul id="genre">
             {% for genre in data.genres %}
             <li>{{ genre.name }}</li>
@@ -34,7 +39,7 @@
             {% endfor %}
         </ul>
             
-        <span id="datetime">{{ data.release_date }}</span>
+        <span id="infos">{{ data.release_date }}</span>
         <img src="https://image.tmdb.org/t/p/w500{{ data.poster_path }}" alt="">
     </article>
 </main>

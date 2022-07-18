@@ -1,6 +1,42 @@
 const { fromEvent, map } = rxjs;
 
+function subMenu() {
+    const categories = document.querySelectorAll('.category');
+    const mouseEnter$ = fromEvent (categories, 'mouseenter');
+    const mouseLeave$ = fromEvent (categories, 'mouseleave');
 
+    mouseEnter$
+    .subscribe(e => {
+       let target = e.target
+       
+        if(target.children.length < 1){
+            // Création des éléments pour le sous-menu
+            let ul = document.createElement('ul');
+            let livu = document.createElement('li');
+            let livoir = document.createElement('li');
+            let avu = document.createElement('a');
+            let avoir = document.createElement('a');
+
+            target.appendChild(ul).appendChild(livu).appendChild(avu).setAttribute('href', '{{ patch(\'vu\') }}');
+            avu.innerText = 'Vu';
+            target.appendChild(ul).appendChild(livoir).appendChild(avoir).setAttribute('href', '{{ patch(\'avoir\') }}');
+            avoir.innerText = 'A Voir';
+        }
+        
+        e.stopPropagation();  
+    });
+
+    mouseLeave$
+    .pipe(map(e => e.target))
+    .subscribe((target) => {
+        target.classList.remove("js-actived");
+        target.removeChild(target.lastChild);
+    })
+}
+
+document.addEventListener('DOMContentLoaded', subMenu);
+
+// Code lié au clique
 // function subMenu () {
 //     // Constantes liées au script
 //     const categories = document.querySelectorAll('.category');
@@ -54,42 +90,6 @@ const { fromEvent, map } = rxjs;
 // }
 
 
-function subMenu() {
-    const categories = document.querySelectorAll('.category');
-    const mouseEnter$ = fromEvent (categories, 'mouseenter');
-    const mouseLeave$ = fromEvent (categories, 'mouseleave');
-
-    mouseEnter$
-    .subscribe(e => {
-       let target = e.target
-       
-        if(target.children.length < 1){
-            // Création des éléments pour le sous-menu
-            let ul = document.createElement('ul');
-            let livu = document.createElement('li');
-            let livoir = document.createElement('li');
-            let avu = document.createElement('a');
-            let avoir = document.createElement('a');
-
-            target.appendChild(ul).appendChild(livu).appendChild(avu).setAttribute('href', '{{ patch(\'vu\') }}');
-            avu.innerText = 'Vu';
-            target.appendChild(ul).appendChild(livoir).appendChild(avoir).setAttribute('href', '{{ patch(\'avoir\') }}');
-            avoir.innerText = 'A Voir';
-        }
-        
-        e.stopPropagation();  
-    });
-
-    mouseLeave$
-    .pipe(map(e => e.target))
-    .subscribe((target) => {
-        console.log(target);
-        target.classList.remove("js-actived");
-        target.removeChild(target.lastChild);
-    })
-}
-
-document.addEventListener('DOMContentLoaded', subMenu);
 
 // Le Code fonctionne, mais ce n'est pas la bonne méthode
 // le forEach est utilisé en cas de promesse (ex : requète HTTP)

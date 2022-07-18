@@ -79,7 +79,7 @@ class HomeController extends AbstractController
                 'id' => $id
             ])
         ]);
-         
+        
         return $this->render('/detail/detail-tv.html.twig', [
             'form' => $this->searchBar(),
             'data' => $api->getDetailInfoTv($id),

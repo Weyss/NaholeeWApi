@@ -10,15 +10,20 @@
         <h2>{{ data.name }}</h2>
 
         <div>
-            {% if isInDatabase == null %}
-            <span class="alert" >Cette serie n'est pas ajouter à votre liste</span>
-            {% else %}
-            <span class="alert" >Cette serie est dans votre liste</span>    
-            {% endif %}
-            {{form(formTv)}}
+            {# <span id="js-info"></span> #}
+            {{form_start(formTv)}}
+                {% if isInDatabase == null %}
+                    {{form_row(formTv.statue[1])}}
+                    {{form_row(formTv.statue[2])}}
+                {% elseif isInDatabase.statue.statue == "A voir" %}
+                    {{form_row(formTv.statue[1], {'attr': {'checked':'checked'}})}}
+                    {{form_row(formTv.statue[2])}}
+                {% elseif isInDatabase.statue.statue == "Vu" %}
+                    {{form_row(formTv.statue[1])}}
+                    {{form_row(formTv.statue[2], {'attr': {'checked':'checked'}})}}
+                {% endif %}
+            {{form_start(formTv)}}
         </div>
-        
-        <span id="js-info"></span>
 
         <p>{{ data.overview }}</p>
 

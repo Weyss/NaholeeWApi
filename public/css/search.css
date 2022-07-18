@@ -164,8 +164,6 @@ nav ul:first-child {
 }
 nav ul:first-child li {
   cursor: pointer;
-}
-nav ul:first-child li a {
   font-size: 1.4rem;
 }
 nav ul:first-child li ul li a {

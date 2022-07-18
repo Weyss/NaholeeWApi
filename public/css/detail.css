@@ -164,9 +164,10 @@ nav ul:first-child {
 }
 nav ul:first-child li {
   cursor: pointer;
-}
-nav ul:first-child li a {
   font-size: 1.4rem;
+}
+nav ul:first-child li ul {
+  display: block;
 }
 nav ul:first-child li ul li a {
   font-size: 1.1rem;
@@ -208,6 +209,13 @@ article h2 {
 }
 article div {
   grid-area: 3/15/4/20;
+  display: flex;
+}
+article div form {
+  display: flex;
+}
+article div form div {
+  align-self: baseline;
 }
 article .alert {
   grid-area: 4/15/5/20;
