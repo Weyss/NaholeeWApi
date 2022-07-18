@@ -164,11 +164,8 @@ nav ul:first-child {
 }
 nav ul:first-child li {
   cursor: pointer;
-<<<<<<< HEAD
-=======
 }
 nav ul:first-child li a {
->>>>>>> 31833efc2c542d688d50b6df81da23f83dd11365
   font-size: 1.4rem;
 }
 nav ul:first-child li ul li a {
@@ -200,7 +197,35 @@ footer a:last-child {
 }
 
 main {
-  overflow: scroll;
-  scrollbar-width: none;
-  text-align: center;
-}/*# sourceMappingURL=search.css.map */
+  display: grid;
+  grid-template-columns: repeat(27, 1fr);
+  grid-template-rows: repeat(20, 50px);
+}
+main h2 {
+  grid-area: 1/9/2/20;
+  justify-self: center;
+  align-self: center;
+}
+main div {
+  grid-area: 3/15/4/20;
+}
+main .alert {
+  grid-area: 4/15/5/20;
+}
+main p {
+  grid-area: 9/15/18/22;
+}
+main #genre {
+  grid-area: 6/15/6/20;
+}
+main #country {
+  grid-area: 7/15/7/20;
+}
+main #datetime {
+  grid-area: 5/15;
+}
+main img {
+  width: 100%;
+  grid-column: 9/14;
+  grid-row: 3;
+}/*# sourceMappingURL=detail-tv.css.map */
