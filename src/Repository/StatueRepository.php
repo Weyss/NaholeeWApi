@@ -19,21 +19,18 @@ class StatueRepository extends ServiceEntityRepository
         parent::__construct($registry, Statue::class);
     }
 
-    /**
-     * Méthode pour récupérer une collection de Film ou d'un Movie
-     * en fonction de l'id du statue.
-     *
-     * @param string $tableJoin
-     * @param string $aliasJoin
-     * @param integer $id
-     * @return array
-     */
-    public function findTitleByIdStatue(string $tableJoin, string $aliasJoin, int $id): array 
+    
+    public function findTitleSeen($value)
     {
         return $this->createQueryBuilder('s')
-                    ->innerJoin('s.'.$tableJoin, $aliasJoin, 'WITH', 's.id = :id')
-                    ->setParameter('id', $id)
+                    ->select('s', 'f', 't')
+                    ->innerJoin('s.film', 'f')
+                    ->innerJoin('s.tv', 't')
+                    ->andWhere('f.country LIKE :category', 't.country LIKE :category')
+                    ->setParameter('category', '%'. $value .'%')
                     ->getQuery()
                     ->getResult();
+                   
     }
 }
+

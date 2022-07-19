@@ -13,7 +13,7 @@
     </head>
     <body>
         <header>
-            <h1><a href="#">NahoLee</a></h1>
+            <h1><a href="{{ path('index') }}">NahoLee</a></h1>
 
             {{form_start(form,{'attr': {'id': 'search'}})}}
                 {{ form_widget(form.query) }}
@@ -22,13 +22,13 @@
 
             <nav>
                 <ul>
-                    <li class="category">Coréen</li>
-                    <li class="category">Japonais</li>
-                    <li class="category">Thaïlandais</li>
-                    <li class="category">Chinois / Taiwanais</li>
-                    <li class="category">Animées</li>
-                    <li class="category">Series</li>
-                    <li class="category">Films</li>
+                    <li class="category" data-category="kr">Coréen</li>
+                    <li class="category" data-category="jp">Japonais</li>
+                    <li class="category" data-category="tl">Thaïlandais</li>
+                    <li class="category" data-category="ct">Chinois / Taiwanais</li>
+                    <li class="category" data-category="anime">Animées</li>
+                    <li class="category" data-category="tv">Series</li>
+                    <li class="category" data-category="film">Films</li>
                 </ul>
             </nav>
         </header>

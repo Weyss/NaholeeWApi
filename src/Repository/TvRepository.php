@@ -19,6 +19,32 @@ class TvRepository extends ServiceEntityRepository
         parent::__construct($registry, Tv::class);
     }
 
+    /**
+    * @return Tv[] Returns an array of TV objects
+    */
+    public function findTvByToSee()
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.statue = 1')
+            ->orderBy('t.title', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+    * @return Tv[] Returns an array of Tv objects
+    */
+    public function findTvBySeen()
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.statue = 2')
+            ->orderBy('t.title', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Tv[] Returns an array of Tv objects
     //  */

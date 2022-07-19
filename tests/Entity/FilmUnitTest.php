@@ -15,7 +15,8 @@ class FilmUnitTest extends TestCase
     {
        return (new Film)->setTitle("The Witcher")
                         ->setIdFilmTmdb(192304)
-                        ->setStatue(new Statue());
+                        ->setStatue(new Statue())
+                        ->setCountry("French");
                         
     }
 
@@ -48,6 +49,21 @@ class FilmUnitTest extends TestCase
     }
 
     /**
+     * Test la validité du pays
+     */
+    public function testValidCountry(){
+        $this->assertEquals("French", $this->getFilm()->getCountry());
+    }
+
+    /**
+     * Test l'invalidité du pays
+     */
+    public function testInvalidCountry(){
+        $this->assertNotEquals(192304, $this->getFilm()->getCountry());
+    }
+
+
+    /**
      * Test des champs vide
      */
     public function testEmpty(){
@@ -56,5 +72,6 @@ class FilmUnitTest extends TestCase
         $this->assertEmpty($film->getTitle());
         $this->assertEmpty($film->getIdFilmTmdb());
         $this->assertEmpty($film->getStatue());
+        $this->assertEmpty($film->getCountry());
     }
 }

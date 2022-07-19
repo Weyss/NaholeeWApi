@@ -38,7 +38,7 @@ class HomeController extends AbstractController
 
     #[Route('/search', name: 'search')]
     /**
-     * Méthode obtenir les reultats de la recherche
+     * Méthode pour obtenir les reultats de la recherche
      *
      * @param Request $request
      * @param CallApiService $api
@@ -133,16 +133,25 @@ class HomeController extends AbstractController
         /** @var Statue $statue */
         switch($ajaxRequest) 
         {
+            // Si la requête pour l'ajout ou l'édition est faite pour une SERIE
+            // alors on la traitre 
             case isset($ajaxRequest['tv']):
                 $statue = $statueRepo->find($ajaxRequest['tv']['statue']);
 
+                /** @var array $countries */
+                // Création d'un tableau dans la cas où il y aurait plusieurs pays de production
+                foreach($api->getDetailInfoTv($id)['production_countries'] as $country) {
+                    $countries[] = $country['iso_3166_1'];
+                };
+                
                 /** @var Tv $tv */
                 $tv = $tvRepo->findOneBy(['idTvTmdb' => $id]);
 
                 if(!$tv){
                     $tv = (new Tv())->setTitle($api->getDetailInfoTv($id)['name'])
                                     ->setIdTvTmdb($id)
-                                    ->setStatue($statue);
+                                    ->setStatue($statue)
+                                    ->setCountry(implode(", " , $countries));
             
                     $em->persist($tv);
                     $em->flush();
@@ -159,8 +168,16 @@ class HomeController extends AbstractController
                     return $this->json("Modifier", 200);
                 }
             break;
+            // Si la requête pour l'ajout ou l'édition est faite pour un FILM
+            // alors on la traitre 
             case isset($ajaxRequest['film']):
                 $statue = $statueRepo->find($ajaxRequest['film']['statue']);
+
+                /** @var array $countries */
+                // Création d'un tableau dans la cas où il y aurait plusieurs pays de production
+                foreach($api->getDetailInfoFilm($id)['production_countries'] as $country) {
+                    $countries[] = $country['iso_3166_1'];
+                };
 
                 /** @var Film $film */
                 $film = $filmRepo->findOneBy(['idFilmTmdb' => $id]);
@@ -168,8 +185,10 @@ class HomeController extends AbstractController
                 if(!$film){
                     $film = (new Film())->setTitle($api->getDetailInfoFilm($id)['title'])
                                         ->setIdFilmTmdb($id)
-                                        ->setStatue($statue);
-            
+                                        ->setStatue($statue)
+                                        ->setCountry(implode(", " , $countries));
+                                        
+                                        
                     $em->persist($film);
                     $em->flush();
             
@@ -207,5 +226,44 @@ class HomeController extends AbstractController
             ->getForm();
 
         return $form->createView();
+    }
+
+
+    #[Route('/results/seen/{category}', name: 'results_seen')]
+
+    public function results(string $category, FilmRepository $filmRepository, StatueRepository $statueRepository): Response
+    {
+        /** @var array $results */
+        switch($category){
+            case 'kr':
+                // $results =  $statueRepository->findTitleSeen($category);
+            break;
+            case 'jp':
+                $results =  $statueRepository->findTitleSeen($category);
+            break;
+            case 'tl':
+                // $results =  $statueRepository->findTitleSeen($category);
+            break;
+            case 'ct':
+                // $results =  $statueRepository->findTitleSeen($category);
+            break;
+            case 'anime':
+                $results =  $filmRepository->findBySeen();
+            break;
+            case 'tv':
+                $results =  $filmRepository->findTvBySeen();
+            break;
+            case 'film':
+                $results =  $filmRepository->findFilmBySeen();
+            break;
+
+            
+        }
+        dump($results);
+        return $this->render('/results.html.twig', [
+            'form' => $this->searchBar(),
+            'results' => $results
+        ]);
+
     }
 }

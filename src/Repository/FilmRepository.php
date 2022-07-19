@@ -19,22 +19,42 @@ class FilmRepository extends ServiceEntityRepository
         parent::__construct($registry, Film::class);
     }
 
-    // /**
-    //  * @return Film[] Returns an array of Film objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+    * @return Film[] Returns an array of Film objects
+    */
+    public function findFilmByToSee()
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('f.statue = 1')
+            ->orderBy('f.title', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
+
+    /**
+    * @return Film[] Returns an array of Film objects
     */
+    public function findFilmBySeen()
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.statue = 2')
+            ->orderBy('f.title', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findTitleSeen($value): array 
+    {
+        return $this->createQueryBuilder('f')
+                    ->innerJoin('f.statue', 's', 'WITH', 's.statue = :statue')
+                    ->andWhere('f.country LIKE :category')
+                    ->setParameter('statue', 'Vu')
+                    ->setParameter('category', '%'. $value .'%')
+                    ->getQuery()
+                    ->getResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?Film

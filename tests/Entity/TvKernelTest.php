@@ -14,7 +14,8 @@ class TvKernelTest extends KernelTestCase
     public function getTv(): Tv
     {
         return (new Tv)->setTitle("Rugal")
-                        ->setIdTvTmdb(192304);
+                        ->setIdTvTmdb(192304)
+                        ->setCountry('French');
     }
 
     /**
@@ -51,7 +52,7 @@ class TvKernelTest extends KernelTestCase
      * Test si le titre n'est pas une chaîne de caractère
      */
     public function testInvalidTypeTitle(){
-        $this->assertIsNotString(192304);
+        $this->assertIsNotString($this->getTv()->setTitle(192304));
     }
 
     /**
@@ -75,5 +76,35 @@ class TvKernelTest extends KernelTestCase
      */
     public function testInvalidTypeIdTmdb(){
         $this->assertIsNotInt('The Witcher');
+    }
+
+     /**
+     * Test si le pays est vide
+     */
+    public function testInvalidBlankCountry(){
+        $this->assertErrors(0, $this->getTv()->setCountry(""));
+    }
+
+    /**
+     * Test si le pays n'est pas une chaîne de caractère
+     */
+    public function testInvalidTypeCountry(){
+        $this->assertIsNotString($this->getTv()->setCountry(192304));
+    }
+
+    /**
+     * Test si le pays ne dépasse pas le nombre de caratères
+     */
+    public function testInvalidLengthCountry(){
+        $this->assertErrors(1, $this->getTv()->setCountry("
+            Lorem ipsum dolor sit amet. Non voluptates inventore aut eveniet repudiandae ut omnis dolorem! 
+            Ad aliquam reprehenderit eos voluptas aspernatur aut voluptatem amet?
+            Ea quis minus sed harum similique ad modi sint a assumenda tempore et temporibus omnis ut sint nisi ad iusto provident. 
+            Qui excepturi ducimus quo molestiae inventore ea nulla minima ad impedit quia in Quis doloribus rem amet rerum.
+            Ad maiores reprehenderit qui temporibus aspernatur est impedit quia sit aliquid dolores. 
+            Non galisum dignissimos et suscipit omnis in natus quos At vero blanditiis in praesentium magni ea necessitatibus earum. 
+            33 velit magnam et aliquid repudiandae sit placeat odio eos architecto neque. 
+            Ea natus laborum nam rerum minima et deserunt temporibus sit tenetur quod.
+        "));
     }
 }

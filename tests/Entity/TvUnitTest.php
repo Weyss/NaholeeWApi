@@ -3,6 +3,7 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Tv;
+use App\Entity\Statue;
 use PHPUnit\Framework\TestCase;
 
 class TvUnitTest extends TestCase
@@ -13,7 +14,9 @@ class TvUnitTest extends TestCase
     public function getTv(): Tv
     {
        return (new Tv)->setTitle("Rugal")
-                        ->setIdTvTmdb(192304);
+                        ->setIdTvTmdb(192304)
+                        ->setStatue(new Statue())
+                        ->setCountry("French");
                         
     }
 
@@ -46,6 +49,20 @@ class TvUnitTest extends TestCase
     }
 
     /**
+     * Test la validité du pays
+     */
+    public function testValidCountry(){
+        $this->assertEquals("French", $this->getTv()->getCountry());
+    }
+
+    /**
+     * Test l'invalidité du pays
+     */
+    public function testInvalidCountry(){
+        $this->assertNotEquals(192304, $this->getTv()->getCountry());
+    }
+
+    /**
      * Test des champs vide
      */
     public function testEmptyTitle(){
@@ -53,5 +70,7 @@ class TvUnitTest extends TestCase
 
         $this->assertEmpty($tv->getTitle());
         $this->assertEmpty($tv->getIdTvTmdb());
+        $this->assertEmpty($tv->getStatue());
+        $this->assertEmpty($tv->getCountry());
     }
 }
