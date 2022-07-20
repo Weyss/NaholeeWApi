@@ -134,7 +134,7 @@ class HomeController extends AbstractController
         switch($ajaxRequest) 
         {
             // Si la requête pour l'ajout ou l'édition est faite pour une SERIE
-            // alors on la traitre 
+            // alors on la traitre ici
             case isset($ajaxRequest['tv']):
                 $statue = $statueRepo->find($ajaxRequest['tv']['statue']);
 
@@ -169,7 +169,7 @@ class HomeController extends AbstractController
                 }
             break;
             // Si la requête pour l'ajout ou l'édition est faite pour un FILM
-            // alors on la traitre 
+            // alors on la traitre ici
             case isset($ajaxRequest['film']):
                 $statue = $statueRepo->find($ajaxRequest['film']['statue']);
 
@@ -229,40 +229,40 @@ class HomeController extends AbstractController
     }
 
 
-    #[Route('/results/seen/{category}', name: 'results_seen')]
+    #[Route('/results/seen/{type}', name: 'results_seen')]
 
-    public function results(string $category, FilmRepository $filmRepository, StatueRepository $statueRepository): Response
+    public function results(string $type, FilmRepository $filmRepository, TvRepository $tvRepository, StatueRepository $statueRepository): Response
     {
-        /** @var array $results */
-        switch($category){
+        /** @var array $answer */
+        switch($type){
             case 'kr':
-                // $results =  $statueRepository->findTitleSeen($category);
+                $answer =  $statueRepository->findTitleBySeen($type);
             break;
             case 'jp':
-                $results =  $statueRepository->findTitleSeen($category);
+                $answer =  $statueRepository->findTitleBySeen($type);
             break;
             case 'tl':
-                // $results =  $statueRepository->findTitleSeen($category);
+                $answer =  $statueRepository->findTitleBySeen($type);
             break;
             case 'ct':
-                // $results =  $statueRepository->findTitleSeen($category);
+                $answer =  $statueRepository->findTitleBySeen($type);
             break;
             case 'anime':
-                $results =  $filmRepository->findBySeen();
+                $answer =  $statueRepository->findTitleBySeen($type);
             break;
             case 'tv':
-                $results =  $filmRepository->findTvBySeen();
+                $answer =  $tvRepository->findTvBySeen();
             break;
             case 'film':
-                $results =  $filmRepository->findFilmBySeen();
+                $answer =  $filmRepository->findFilmBySeen();
             break;
 
             
         }
-        dump($results);
+        dump($answer);
         return $this->render('/results.html.twig', [
             'form' => $this->searchBar(),
-            'results' => $results
+            'results' => $answer
         ]);
 
     }

@@ -20,9 +20,11 @@ class TvRepository extends ServiceEntityRepository
     }
 
     /**
-    * @return Tv[] Returns an array of TV objects
-    */
-    public function findTvByToSee()
+     * Méthodes pour rechercher des series "a voir"
+     *
+     * @return Tv[]
+     */
+    public function findTvByToSee(): array
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.statue = 1')
@@ -33,9 +35,11 @@ class TvRepository extends ServiceEntityRepository
     }
 
     /**
-    * @return Tv[] Returns an array of Tv objects
-    */
-    public function findTvBySeen()
+     * Méthodes pour rechercher des series "a voir"
+     *
+     * @return Tv[]
+     */
+    public function findTvBySeen(): array
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.statue = 2')
@@ -44,33 +48,4 @@ class TvRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-    // /**
-    //  * @return Tv[] Returns an array of Tv objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Tv
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

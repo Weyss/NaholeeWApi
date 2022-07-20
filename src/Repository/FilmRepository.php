@@ -20,9 +20,11 @@ class FilmRepository extends ServiceEntityRepository
     }
 
     /**
-    * @return Film[] Returns an array of Film objects
-    */
-    public function findFilmByToSee()
+     * Méthodes pour rechercher des film "vu"
+     *
+     * @return Film[]
+     */
+    public function findFilmByToSee(): array
     {
         return $this->createQueryBuilder('f')
             ->andWhere('f.statue = 1')
@@ -33,9 +35,11 @@ class FilmRepository extends ServiceEntityRepository
     }
 
     /**
-    * @return Film[] Returns an array of Film objects
-    */
-    public function findFilmBySeen()
+     * Méthodes pour rechercher des films "a voir"
+     *
+     * @return Film[]
+     */
+    public function findFilmBySeen(): array
     {
         return $this->createQueryBuilder('f')
             ->andWhere('f.statue = 2')
@@ -44,27 +48,4 @@ class FilmRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-    public function findTitleSeen($value): array 
-    {
-        return $this->createQueryBuilder('f')
-                    ->innerJoin('f.statue', 's', 'WITH', 's.statue = :statue')
-                    ->andWhere('f.country LIKE :category')
-                    ->setParameter('statue', 'Vu')
-                    ->setParameter('category', '%'. $value .'%')
-                    ->getQuery()
-                    ->getResult();
-    }
-
-    /*
-    public function findOneBySomeField($value): ?Film
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
