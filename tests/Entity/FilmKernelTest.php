@@ -16,7 +16,8 @@ class FilmKernelTest extends KernelTestCase
     {
         return (new Film)->setTitle("The Witcher")
                          ->setIdFilmTmdb(192304)
-                         ->setCountry("French");
+                         ->setCountry("French")
+                         ->setAnime(true);
     }
 
     /**
@@ -108,4 +109,12 @@ class FilmKernelTest extends KernelTestCase
             Ea natus laborum nam rerum minima et deserunt temporibus sit tenetur quod.
         "));
     }
+
+    /**
+     * Test si le film ne contient pas la catégory "Anime"
+     */
+    public function testFalseAnime(){
+        $this->assertErrors(0, $this->getFilm()->setAnime(false));
+    }
+
 }

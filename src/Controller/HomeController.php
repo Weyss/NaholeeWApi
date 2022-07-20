@@ -104,7 +104,7 @@ class HomeController extends AbstractController
                 'id' => $id
             ])
         ]);
-
+        
         return $this->render('/detail/detail-film.html.twig', [
             'form' => $this->searchBar(),
             'data' => $api->getDetailInfoFilm($id),
@@ -144,6 +144,13 @@ class HomeController extends AbstractController
                     $countries[] = $country['iso_3166_1'];
                 };
                 
+                /** @var array $genres */
+                // Création d'un tableau qui récupere les genres afin de déterminer plus tard
+                // si la serie contient le genre "Animation"
+                foreach($api->getDetailInfoTv($id)['genres'] as $genre){
+                    $genres[] = $genre['name'];
+                }
+
                 /** @var Tv $tv */
                 $tv = $tvRepo->findOneBy(['idTvTmdb' => $id]);
 
@@ -151,7 +158,8 @@ class HomeController extends AbstractController
                     $tv = (new Tv())->setTitle($api->getDetailInfoTv($id)['name'])
                                     ->setIdTvTmdb($id)
                                     ->setStatue($statue)
-                                    ->setCountry(implode(", " , $countries));
+                                    ->setCountry(implode(", " , $countries))
+                                    ->setAnime(in_array("Animation", $genres));
             
                     $em->persist($tv);
                     $em->flush();
@@ -179,6 +187,13 @@ class HomeController extends AbstractController
                     $countries[] = $country['iso_3166_1'];
                 };
 
+                /** @var array $genres */
+                // Création d'un tableau qui récupere les genres afin de déterminer plus tard
+                // si le film contient le genre "Animation"
+                foreach($api->getDetailInfoFilm($id)['genres'] as $genre){
+                    $genres[] = $genre['name'];
+                }
+
                 /** @var Film $film */
                 $film = $filmRepo->findOneBy(['idFilmTmdb' => $id]);
 
@@ -186,7 +201,8 @@ class HomeController extends AbstractController
                     $film = (new Film())->setTitle($api->getDetailInfoFilm($id)['title'])
                                         ->setIdFilmTmdb($id)
                                         ->setStatue($statue)
-                                        ->setCountry(implode(", " , $countries));
+                                        ->setCountry(implode(", " , $countries))
+                                        ->setAnime(in_array('Animation', $genres));
                                         
                                         
                     $em->persist($film);

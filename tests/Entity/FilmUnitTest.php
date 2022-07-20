@@ -16,7 +16,8 @@ class FilmUnitTest extends TestCase
        return (new Film)->setTitle("The Witcher")
                         ->setIdFilmTmdb(192304)
                         ->setStatue(new Statue())
-                        ->setCountry("French");
+                        ->setCountry("French")
+                        ->setAnime(true);
                         
     }
 
@@ -62,6 +63,19 @@ class FilmUnitTest extends TestCase
         $this->assertNotEquals(192304, $this->getFilm()->getCountry());
     }
 
+    /**
+     * Test la valeur boolean "true" pour un anime
+     */
+    public function testTrueValueAnime(){
+        $this->assertTrue(true);
+    }
+
+    /**
+     * Test la valeur boolean "false" pour un anime
+     */
+    public function testFalseValueAnime(){
+        $this->assertFalse(false);
+    }
 
     /**
      * Test des champs vide
@@ -73,5 +87,6 @@ class FilmUnitTest extends TestCase
         $this->assertEmpty($film->getIdFilmTmdb());
         $this->assertEmpty($film->getStatue());
         $this->assertEmpty($film->getCountry());
+        $this->assertEmpty($film->getAnime());
     }
 }
