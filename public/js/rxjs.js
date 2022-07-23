@@ -83,13 +83,13 @@ document.addEventListener('DOMContentLoaded', subMenu);
 //     return target;
 // }
 
-function removeActuallyTarget(actuallyTarget) {
-    // Suppréssion du sous-menu
-    actuallyTarget.classList.remove("js-actived");
-    actuallyTarget.removeChild(actuallyTarget.lastChild);
+// function removeActuallyTarget(actuallyTarget) {
+//     // Suppréssion du sous-menu
+//     actuallyTarget.classList.remove("js-actived");
+//     actuallyTarget.removeChild(actuallyTarget.lastChild);
 
-    return actuallyTarget;
-}
+//     return actuallyTarget;
+// }
 
 
 

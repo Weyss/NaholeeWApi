@@ -18,41 +18,5 @@ class StatueRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Statue::class);
     }
-
-    /**
-     * Méthode pour rechercher des titres "vu" en fonction de la catégorie
-    *
-    * @param string $value
-    * @return array
-    */
-    public function findTitleBySeen($value): array
-    {
-        return $this->createQueryBuilder('s')
-                    ->select('s', 'f', 't')
-                    ->innerJoin('s.film', 'f')
-                    ->innerJoin('s.tv', 't')
-                    ->andWhere('f.country LIKE :category', 't.country LIKE :category')
-                    ->setParameter('category', '%'. $value .'%')
-                    ->getQuery()
-                    ->getResult();               
-    }
-
-    /**
-     * Méthode pour rechercher des titres "a voir" en fonction de la catégorie
-    *
-    * @param string $value
-    * @return array
-    */
-    public function findTitleByToSee($value): array
-    {
-        return $this->createQueryBuilder('s')
-                    ->select('s', 'f', 't')
-                    ->innerJoin('s.film', 'f')
-                    ->innerJoin('s.tv', 't')
-                    ->andWhere('f.country LIKE :category', 't.country LIKE :category')
-                    ->setParameter('category', '%'. $value .'%')
-                    ->getQuery()
-                    ->getResult();                
-    }
 }
 

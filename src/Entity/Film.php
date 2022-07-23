@@ -36,6 +36,9 @@ class Film
     )]
     private $country;
 
+    #[ORM\Column(type: 'boolean')]
+    private $anime;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +88,18 @@ class Film
     public function setCountry(?string $country): self
     {
         $this->country = $country;
+
+        return $this;
+    }
+
+    public function getAnime(): ?bool
+    {
+        return $this->anime;
+    }
+
+    public function setAnime(bool $anime): self
+    {
+        $this->anime = $anime;
 
         return $this;
     }

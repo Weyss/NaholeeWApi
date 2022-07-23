@@ -15,7 +15,8 @@ class TvKernelTest extends KernelTestCase
     {
         return (new Tv)->setTitle("Rugal")
                         ->setIdTvTmdb(192304)
-                        ->setCountry('French');
+                        ->setCountry('French')
+                        ->setAnime(true);
     }
 
     /**
@@ -106,5 +107,12 @@ class TvKernelTest extends KernelTestCase
             33 velit magnam et aliquid repudiandae sit placeat odio eos architecto neque. 
             Ea natus laborum nam rerum minima et deserunt temporibus sit tenetur quod.
         "));
+    }
+
+    /**
+     * Test si la serie ne contient pas la catégory "Anime"
+     */
+    public function testFalseAnime(){
+        $this->assertErrors(0, $this->getTv()->setAnime(false));
     }
 }

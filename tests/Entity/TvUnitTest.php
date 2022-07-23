@@ -16,7 +16,8 @@ class TvUnitTest extends TestCase
        return (new Tv)->setTitle("Rugal")
                         ->setIdTvTmdb(192304)
                         ->setStatue(new Statue())
-                        ->setCountry("French");
+                        ->setCountry("French")
+                        ->setAnime(true);
                         
     }
 
@@ -63,6 +64,21 @@ class TvUnitTest extends TestCase
     }
 
     /**
+     * Test la valeur boolean "true" pour un anime
+     */
+    public function testTrueValueAnime(){
+        $this->assertTrue(true);
+    }
+
+    /**
+     * Test la valeur boolean "false" pour un anime
+     */
+    public function testFalseValueAnime(){
+        $this->assertFalse(false);
+    }
+
+
+    /**
      * Test des champs vide
      */
     public function testEmptyTitle(){
@@ -72,5 +88,6 @@ class TvUnitTest extends TestCase
         $this->assertEmpty($tv->getIdTvTmdb());
         $this->assertEmpty($tv->getStatue());
         $this->assertEmpty($tv->getCountry());
+        $this->assertEmpty($tv->getAnime());
     }
 }

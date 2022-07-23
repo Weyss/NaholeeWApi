@@ -46,8 +46,9 @@ class HomeController extends AbstractController
      */
     public function search(Request $request, CallApiService $api): Response
     {
-        $dataTv= null;
-        $dataFilm = null;
+        /** @var array $dataTv */
+        /** @var array $dataFilm */
+
         $query = $request->request->all('form');
         
         if(isset($query['query']))
@@ -55,7 +56,7 @@ class HomeController extends AbstractController
             $dataTv = $api->getInfoTv($query['query'])['results'];
             $dataFilm = $api->getInfoFilm($query['query'])['results'];
         }
-          
+         
         return $this->render('search.html.twig', [
             'form' => $this->searchBar(),
             'resultsTv' => $dataTv,
@@ -105,10 +106,19 @@ class HomeController extends AbstractController
             ])
         ]);
 
+        $isInDb = $filmRepo->findOneBy(['id' => $id]);
+
+        if($isInDb == true)
+            $datas = $isInDb;
+        else
+            $datas = $api->getDetailInfoFilm($id);
+
+        // dd($datas);
+
         return $this->render('/detail/detail-film.html.twig', [
             'form' => $this->searchBar(),
-            'data' => $api->getDetailInfoFilm($id),
-            'isInDatabase' => $filmRepo->findOneBy(['idFilmTmdb' => $id]),
+            'data' => $datas,
+            'isInDatabase' => $isInDb,
             'formFilm' => $form->createView()
         ]);
     }
@@ -144,6 +154,13 @@ class HomeController extends AbstractController
                     $countries[] = $country['iso_3166_1'];
                 };
                 
+                /** @var array $genres */
+                // Création d'un tableau qui récupere les genres afin de déterminer plus tard
+                // si la serie contient le genre "Animation"
+                foreach($api->getDetailInfoTv($id)['genres'] as $genre){
+                    $genres[] = $genre['name'];
+                }
+
                 /** @var Tv $tv */
                 $tv = $tvRepo->findOneBy(['idTvTmdb' => $id]);
 
@@ -151,7 +168,8 @@ class HomeController extends AbstractController
                     $tv = (new Tv())->setTitle($api->getDetailInfoTv($id)['name'])
                                     ->setIdTvTmdb($id)
                                     ->setStatue($statue)
-                                    ->setCountry(implode(", " , $countries));
+                                    ->setCountry(implode(", " , $countries))
+                                    ->setAnime(in_array("Animation", $genres));
             
                     $em->persist($tv);
                     $em->flush();
@@ -179,6 +197,13 @@ class HomeController extends AbstractController
                     $countries[] = $country['iso_3166_1'];
                 };
 
+                /** @var array $genres */
+                // Création d'un tableau qui récupere les genres afin de déterminer plus tard
+                // si le film contient le genre "Animation"
+                foreach($api->getDetailInfoFilm($id)['genres'] as $genre){
+                    $genres[] = $genre['name'];
+                }
+
                 /** @var Film $film */
                 $film = $filmRepo->findOneBy(['idFilmTmdb' => $id]);
 
@@ -186,7 +211,8 @@ class HomeController extends AbstractController
                     $film = (new Film())->setTitle($api->getDetailInfoFilm($id)['title'])
                                         ->setIdFilmTmdb($id)
                                         ->setStatue($statue)
-                                        ->setCountry(implode(", " , $countries));
+                                        ->setCountry(implode(", " , $countries))
+                                        ->setAnime(in_array('Animation', $genres));
                                         
                                         
                     $em->persist($film);
@@ -229,41 +255,4 @@ class HomeController extends AbstractController
     }
 
 
-    #[Route('/results/seen/{type}', name: 'results_seen')]
-
-    public function results(string $type, FilmRepository $filmRepository, TvRepository $tvRepository, StatueRepository $statueRepository): Response
-    {
-        /** @var array $answer */
-        switch($type){
-            case 'kr':
-                $answer =  $statueRepository->findTitleBySeen($type);
-            break;
-            case 'jp':
-                $answer =  $statueRepository->findTitleBySeen($type);
-            break;
-            case 'tl':
-                $answer =  $statueRepository->findTitleBySeen($type);
-            break;
-            case 'ct':
-                $answer =  $statueRepository->findTitleBySeen($type);
-            break;
-            case 'anime':
-                $answer =  $statueRepository->findTitleBySeen($type);
-            break;
-            case 'tv':
-                $answer =  $tvRepository->findTvBySeen();
-            break;
-            case 'film':
-                $answer =  $filmRepository->findFilmBySeen();
-            break;
-
-            
-        }
-        dump($answer);
-        return $this->render('/results.html.twig', [
-            'form' => $this->searchBar(),
-            'results' => $answer
-        ]);
-
-    }
 }
