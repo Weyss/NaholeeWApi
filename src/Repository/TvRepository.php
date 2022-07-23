@@ -18,4 +18,23 @@ class TvRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Tv::class);
     }
+
+    /**
+     * Méthodes pour rechercher des series en fonction du statue
+     * demandé
+     * 
+     * @param string $statue
+     *
+     * @return Tv[]
+     */
+    public function findTvByStatue(string $statue): array
+    {
+        return $this->createQueryBuilder('t')
+            ->innerJoin('t.statue', 's', 'WITH', 's.id = t.statue')
+            ->where('s.statue = :statue')
+            ->setParameter('statue', $statue)
+            ->orderBy('t.title', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

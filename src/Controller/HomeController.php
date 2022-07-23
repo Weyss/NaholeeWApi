@@ -105,20 +105,11 @@ class HomeController extends AbstractController
                 'id' => $id
             ])
         ]);
-
-        $isInDb = $filmRepo->findOneBy(['id' => $id]);
-
-        if($isInDb == true)
-            $datas = $isInDb;
-        else
-            $datas = $api->getDetailInfoFilm($id);
-
-        // dd($datas);
-
+        
         return $this->render('/detail/detail-film.html.twig', [
             'form' => $this->searchBar(),
-            'data' => $datas,
-            'isInDatabase' => $isInDb,
+            'data' => $api->getDetailInfoFilm($id),
+            'isInDatabase' => $filmRepo->findOneBy(['idTmdb' => $id]),
             'formFilm' => $form->createView()
         ]);
     }
@@ -168,7 +159,8 @@ class HomeController extends AbstractController
                                     ->setIdTmdb($id)
                                     ->setStatue($statue)
                                     ->setCountry(implode(", " , $countries))
-                                    ->setAnime(in_array("Animation", $genres));
+                                    ->setAnime(in_array("Animation", $genres))
+                                    ->setMedia('tv');
             
                     $em->persist($tv);
                     $em->flush();
@@ -211,7 +203,8 @@ class HomeController extends AbstractController
                                         ->setIdTmdb($id)
                                         ->setStatue($statue)
                                         ->setCountry(implode(", " , $countries))
-                                        ->setAnime(in_array('Animation', $genres));
+                                        ->setAnime(in_array('Animation', $genres))
+                                        ->setMedia('film');
                                         
                                         
                     $em->persist($film);
@@ -233,7 +226,47 @@ class HomeController extends AbstractController
     }
     
 
+    #[Route('/results/seen/{type}', name: 'results')]
+    /**
+     * Méthode pour afficher les résultats demandés
+     * depuis la barre de navigation pour le statue 'Vu'
+     *
+     * @param string $type
+     * @param StatueRepository $statueRepo
+     * @param FilmRepository $filmRepo
+     * @param TvRepository $tvRepo
+     * @return Response
+     */
+    public function resultsSeen(string $type, StatueRepository $statueRepo, FilmRepository $filmRepo, TvRepository $tvRepo): Response
+    {
 
+        return $this->render('/results.html.twig', [
+            'form' => $this->searchBar(),
+            'results' => $this->results('Vu', $type, $statueRepo, $filmRepo, $tvRepo)
+        ]);
+
+    }
+
+
+    #[Route('/results/tosee/{type}', name: 'results_to_see')]
+    /**
+     * Méthode pour afficher les résultats demandés
+     * depuis la barre de navigation pour le statue 'A voir'
+     *
+     * @param string $type
+     * @param StatueRepository $statueRepo
+     * @param FilmRepository $filmRepo
+     * @param TvRepository $tvRepo
+     * @return Response
+     */
+    public function resultsToSee(string $type, StatueRepository $statueRepo, FilmRepository $filmRepo, TvRepository $tvRepo): Response
+    {
+        return $this->render('/results.html.twig', [
+            'form' => $this->searchBar(),
+            'results' => $this->results('A voir', $type, $statueRepo, $filmRepo, $tvRepo)
+        ]);
+
+    }
 
     /**
      * Méthode pour générer une barre de recherche
@@ -256,5 +289,41 @@ class HomeController extends AbstractController
         return $form->createView();
     }
 
-
+    /**
+     * Méthode pour récupérer les résultats demandés
+     * depuis la barre de navigation
+     *
+     * @param string $statue
+     * @param mixed $type
+     * @param StatueRepository $statueRepo
+     * @param FilmRepository $filmRepo
+     * @param TvRepository $tvRepo
+     * @return array
+     */
+    private function results(string $statue, mixed $type, StatueRepository $statueRepo, FilmRepository $filmRepo, TvRepository $tvRepo): array
+    {
+        switch($type){
+            case 'kr':
+                return $statueRepo->findTitleByStatue($statue, $type);
+            break;
+            case 'jp':
+                return  $statueRepo->findTitleByStatue($statue, $type);
+            break;
+            case 'tl':
+                return  $statueRepo->findTitleByStatue($statue, $type);
+            break;
+            case 'ct':
+                return  $statueRepo->findTitleByStatue($statue, $type);
+            break;
+            case 'anime':
+                return  $statueRepo->findAnimeByStatue($statue);
+            break;
+            case 'tv':
+                return  $tvRepo->findTvByStatue($statue);
+            break;
+            case 'film':
+                return  $filmRepo->findFilmByStatue($statue);
+            break;
+        }
+    }
 }

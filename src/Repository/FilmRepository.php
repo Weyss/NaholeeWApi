@@ -18,4 +18,23 @@ class FilmRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Film::class);
     }
+
+    /**
+     * Méthodes pour rechercher des film en fonction du statue 
+     * demandé
+     *
+     * @param string $statue
+     * 
+     * @return Film[]
+     */
+    public function findFilmByStatue(string $statue): array
+    {
+        return $this->createQueryBuilder('f')
+            ->innerJoin('f.statue', 's', 'WITH', 's.id = f.statue')
+            ->where('s.statue = :statue')
+            ->setParameter('statue', $statue)
+            ->orderBy('f.title', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

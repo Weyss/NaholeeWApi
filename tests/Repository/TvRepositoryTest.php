@@ -7,10 +7,10 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class TvRepositoryTest extends KernelTestCase
 {
-    public function getRepositoryTv(array $criteria)
+    public function getRepositoryTv()
     {
         self::bootKernel();
-        return static::getContainer()->get(TvRepository::class)->findOneBy($criteria);
+        return static::getContainer()->get(TvRepository::class);
     }
 
     /**
@@ -18,7 +18,19 @@ class TvRepositoryTest extends KernelTestCase
      */
     public function testFindOneByIdTmdb()
     {
-        $tv = $this->getRepositoryTv(['idTmdb' => 81]);
+        $tv = $this->getRepositoryTv()->findOneBy(['idTmdb' => 81]);
         $this->assertSame(81, $tv->getIdTmdb());
+    }
+
+     /**
+     * Méthode pour chercher des titres en foncion du statue
+     */
+    public function testFindTitleByAnime()
+    {
+        $query = $this->getRepositoryTv()->findTvByStatue('Statue0');
+        $this->assertIsArray($query);
+        $this->assertArrayHasKey(0, $query);
+        $this->assertIsObject($query[0]);
+        $this->assertObjectHasAttribute('title', $query[0]);
     }
 }
