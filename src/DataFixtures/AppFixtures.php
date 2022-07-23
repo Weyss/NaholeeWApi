@@ -24,15 +24,21 @@ class AppFixtures extends Fixture
             for($j=0; $j<1; $j++){
                 $film = (new Film())
                     ->setTitle($faker->word())
-                    ->setIdFilmTmdb(rand(1, 500))
-                    ->setStatue($statue);
+                    ->setIdTmdb(rand(1, 500))
+                    ->setStatue($statue)
+                    ->setAnime(rand(0,1))
+                    ->setCountry('JP')
+                    ->setMedia('film');
                     
                 $manager->persist($film);
 
                 $tv = (new Tv())
                         ->setTitle($faker->word())
-                        ->setIdTvTmdb(rand(1, 500))
-                        ->setStatue($statue);
+                        ->setIdTmdb(rand(1, 500))
+                        ->setStatue($statue)
+                        ->setAnime(rand(0,1))
+                        ->setCountry('JP')
+                        ->setMedia('tv');
 
                 $manager->persist($tv);
             }

@@ -16,33 +16,33 @@ class StatueRepositoryTest extends KernelTestCase
     /**
      * Méthode pour chercher par statue
      */
-    public function testFindOneByStatue()
+    public function testFind()
     {
-        $query = $this->getRepositoryStatue()->findOneBy(['statue' => 'Statue0']);
+        $query = $this->getRepositoryStatue()->find(['id' => 1]);
         $this->assertSame('Statue0', $query->getStatue());
     }
 
-   /**
-     * Méthode pour chercher un titre
-     * en fonction de l'id du statue
+    /**
+     * Méthode pour chercher des titres en foncion:
+     *  - statue (Vu, A voir)
+     *  - pays (Kr, JP, ..)
      */
-    public function testTitleFilm()
+    public function testFindTitleByStatue()
     {
-        $query = $this->getRepositoryStatue()->findTitleByIdStatue('film', 'f', 40);
-        $film = $query[0]->getFilm();
-        foreach($film as $data)
-            $this->assertSame('possimus', $data->getTitle());
+        $query = $this->getRepositoryStatue()->findTitleByStatue('Statue1', 'jp');
+        $this->assertIsArray($query);
+        $this->assertContains('reiciendis', $query[0]);
     }
 
     /**
-     * Méthode pour chercher un titre
-     * en fonction de l'id du statue
+     * Méthode pour chercher des titres en foncion:
+     *  - statue (Vu, A voir)
+     *  - si c'est un animé (Kr, JP, ..)
      */
-    public function testTitleTv()
+    public function testFindTitleByAnime()
     {
-        $query = $this->getRepositoryStatue()->findTitleByIdStatue('tv', 't', 40);
-        $tv = $query[0]->getTv();
-        foreach($tv as $data)
-            $this->assertSame('eum', $data->getTitle());
+        $query = $this->getRepositoryStatue()->findAnimeByStatue('Statue1');
+        $this->assertIsArray($query);
+        $this->assertContains('reiciendis', $query[0]);
     }
 }

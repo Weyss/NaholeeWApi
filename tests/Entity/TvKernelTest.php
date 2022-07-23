@@ -14,9 +14,10 @@ class TvKernelTest extends KernelTestCase
     public function getTv(): Tv
     {
         return (new Tv)->setTitle("Rugal")
-                        ->setIdTvTmdb(192304)
+                        ->setIdTmdb(192304)
                         ->setCountry('French')
-                        ->setAnime(true);
+                        ->setAnime(true)
+                        ->setMedia('tv');
     }
 
     /**
@@ -114,5 +115,19 @@ class TvKernelTest extends KernelTestCase
      */
     public function testFalseAnime(){
         $this->assertErrors(0, $this->getTv()->setAnime(false));
+    }
+
+     /**
+     * Test si le media est null
+     */
+    public function testInvalidBlankMedia(){
+        $this->assertErrors(1, $this->getTv()->setMedia(''));
+    }
+
+    /**
+     * Test si le media n'est pas une chaine de caractère
+     */
+    public function testInvalidTypeMedia(){
+        $this->assertIsNotString($this->getTv()->setMedia(192304));
     }
 }
