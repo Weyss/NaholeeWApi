@@ -18,34 +18,4 @@ class FilmRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Film::class);
     }
-
-    /**
-     * Méthodes pour rechercher des film "vu"
-     *
-     * @return Film[]
-     */
-    public function findFilmByToSee(): array
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.statue = 1')
-            ->orderBy('f.title', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-    /**
-     * Méthodes pour rechercher des films "a voir"
-     *
-     * @return Film[]
-     */
-    public function findFilmBySeen(): array
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.statue = 2')
-            ->orderBy('f.title', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
 }

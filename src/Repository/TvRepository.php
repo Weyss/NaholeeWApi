@@ -18,34 +18,4 @@ class TvRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Tv::class);
     }
-
-    /**
-     * Méthodes pour rechercher des series "a voir"
-     *
-     * @return Tv[]
-     */
-    public function findTvByToSee(): array
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.statue = 1')
-            ->orderBy('t.title', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-    /**
-     * Méthodes pour rechercher des series "a voir"
-     *
-     * @return Tv[]
-     */
-    public function findTvBySeen(): array
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.statue = 2')
-            ->orderBy('t.title', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
 }

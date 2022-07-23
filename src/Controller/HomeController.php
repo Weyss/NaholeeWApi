@@ -46,8 +46,9 @@ class HomeController extends AbstractController
      */
     public function search(Request $request, CallApiService $api): Response
     {
-        $dataTv= null;
-        $dataFilm = null;
+        /** @var array $dataTv */
+        /** @var array $dataFilm */
+
         $query = $request->request->all('form');
         
         if(isset($query['query']))
@@ -55,7 +56,7 @@ class HomeController extends AbstractController
             $dataTv = $api->getInfoTv($query['query'])['results'];
             $dataFilm = $api->getInfoFilm($query['query'])['results'];
         }
-          
+         
         return $this->render('search.html.twig', [
             'form' => $this->searchBar(),
             'resultsTv' => $dataTv,
@@ -104,11 +105,20 @@ class HomeController extends AbstractController
                 'id' => $id
             ])
         ]);
-        
+
+        $isInDb = $filmRepo->findOneBy(['id' => $id]);
+
+        if($isInDb == true)
+            $datas = $isInDb;
+        else
+            $datas = $api->getDetailInfoFilm($id);
+
+        // dd($datas);
+
         return $this->render('/detail/detail-film.html.twig', [
             'form' => $this->searchBar(),
-            'data' => $api->getDetailInfoFilm($id),
-            'isInDatabase' => $filmRepo->findOneBy(['idFilmTmdb' => $id]),
+            'data' => $datas,
+            'isInDatabase' => $isInDb,
             'formFilm' => $form->createView()
         ]);
     }
@@ -245,41 +255,4 @@ class HomeController extends AbstractController
     }
 
 
-    #[Route('/results/seen/{type}', name: 'results_seen')]
-
-    public function results(string $type, FilmRepository $filmRepository, TvRepository $tvRepository, StatueRepository $statueRepository): Response
-    {
-        /** @var array $answer */
-        switch($type){
-            case 'kr':
-                $answer =  $statueRepository->findTitleBySeen($type);
-            break;
-            case 'jp':
-                $answer =  $statueRepository->findTitleBySeen($type);
-            break;
-            case 'tl':
-                $answer =  $statueRepository->findTitleBySeen($type);
-            break;
-            case 'ct':
-                $answer =  $statueRepository->findTitleBySeen($type);
-            break;
-            case 'anime':
-                $answer =  $statueRepository->findTitleBySeen($type);
-            break;
-            case 'tv':
-                $answer =  $tvRepository->findTvBySeen();
-            break;
-            case 'film':
-                $answer =  $filmRepository->findFilmBySeen();
-            break;
-
-            
-        }
-        dump($answer);
-        return $this->render('/results.html.twig', [
-            'form' => $this->searchBar(),
-            'results' => $answer
-        ]);
-
-    }
 }
