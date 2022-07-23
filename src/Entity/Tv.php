@@ -25,7 +25,7 @@ class Tv
     #[ORM\Column(type: 'integer')]
     #[Assert\NotBlank]
     #[Assert\Type('integer')]
-    private $idTvTmdb;
+    private $idTmdb;
 
     #[ORM\ManyToOne(targetEntity: Statue::class, inversedBy: 'tv')]
     private $statue;
@@ -56,14 +56,14 @@ class Tv
         return $this;
     }
 
-    public function getIdTvTmdb(): ?int
+    public function getIdTmdb(): ?int
     {
-        return $this->idTvTmdb;
+        return $this->idTmdb;
     }
 
-    public function setIdTvTmdb(int $idTvTmdb): self
+    public function setIdTmdb(int $idTmdb): self
     {
-        $this->idTvTmdb = $idTvTmdb;
+        $this->idTvTmdb = $idTmdb;
 
         return $this;
     }

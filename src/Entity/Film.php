@@ -25,7 +25,7 @@ class Film
     #[ORM\Column(type: 'integer')]
     #[Assert\NotBlank]
     #[Assert\Type('integer')]
-    private $idFilmTmdb;
+    private $idTmdb;
 
     #[ORM\ManyToOne(targetEntity: Statue::class, inversedBy: 'film')]
     private $statue;
@@ -56,14 +56,14 @@ class Film
         return $this;
     }
 
-    public function getIdFilmTmdb(): ?int
+    public function getIdTmdb(): ?int
     {
-        return $this->idFilmTmdb;
+        return $this->idTmdb;
     }
 
-    public function setIdFilmTmdb(int $idFilmTmdb): self
+    public function setIdTmdb(int $idTmdb): self
     {
-        $this->idFilmTmdb = $idFilmTmdb;
+        $this->idFilmTmdb = $idTmdb;
 
         return $this;
     }

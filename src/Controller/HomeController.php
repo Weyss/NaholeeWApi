@@ -139,7 +139,6 @@ class HomeController extends AbstractController
     public function management(Request $request, int $id, CallApiService $api, StatueRepository $statueRepo, TvRepository $tvRepo, FilmRepository $filmRepo, EntityManagerInterface $em): JsonResponse
     {
         $ajaxRequest = $request->request->all();
-        
         /** @var Statue $statue */
         switch($ajaxRequest) 
         {
@@ -166,7 +165,7 @@ class HomeController extends AbstractController
 
                 if(!$tv){
                     $tv = (new Tv())->setTitle($api->getDetailInfoTv($id)['name'])
-                                    ->setIdTvTmdb($id)
+                                    ->setIdTmdb($id)
                                     ->setStatue($statue)
                                     ->setCountry(implode(", " , $countries))
                                     ->setAnime(in_array("Animation", $genres));
@@ -209,7 +208,7 @@ class HomeController extends AbstractController
 
                 if(!$film){
                     $film = (new Film())->setTitle($api->getDetailInfoFilm($id)['title'])
-                                        ->setIdFilmTmdb($id)
+                                        ->setIdTmdb($id)
                                         ->setStatue($statue)
                                         ->setCountry(implode(", " , $countries))
                                         ->setAnime(in_array('Animation', $genres));
@@ -233,6 +232,9 @@ class HomeController extends AbstractController
         }  
     }
     
+
+
+
     /**
      * Méthode pour générer une barre de recherche
      *

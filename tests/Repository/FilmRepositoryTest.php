@@ -29,7 +29,7 @@ class FilmRepositoryTest extends KernelTestCase
     public function testFindOneByIdTmdb()
     {
         $film = $this->getRepositoryFilm(['idFilmTmdb' => '21']);
-        $this->assertSame(21, $film->getIdFilmTmdb());
+        $this->assertSame(21, $film->getIdTmdb());
     }
 
     /**

@@ -14,7 +14,7 @@ class TvKernelTest extends KernelTestCase
     public function getTv(): Tv
     {
         return (new Tv)->setTitle("Rugal")
-                        ->setIdTvTmdb(192304)
+                        ->setIdTmdb(192304)
                         ->setCountry('French')
                         ->setAnime(true);
     }

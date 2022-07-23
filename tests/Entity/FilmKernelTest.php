@@ -15,7 +15,7 @@ class FilmKernelTest extends KernelTestCase
     public function getFilm(): Film
     {
         return (new Film)->setTitle("The Witcher")
-                         ->setIdFilmTmdb(192304)
+                         ->setIdTmdb(192304)
                          ->setCountry("French")
                          ->setAnime(true);
     }

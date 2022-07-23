@@ -28,7 +28,7 @@ class TvRepositoryTest extends KernelTestCase
     public function testFindOneByIdTmdb()
     {
         $tv = $this->getRepositoryTv(['idTvTmdb' => '14']);
-        $this->assertSame(14, $tv->getIdTvTmdb());
+        $this->assertSame(14, $tv->getIdTmdb());
     }
 
     /**
