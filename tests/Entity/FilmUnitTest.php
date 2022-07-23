@@ -17,7 +17,8 @@ class FilmUnitTest extends TestCase
                         ->setIdTmdb(192304)
                         ->setStatue(new Statue())
                         ->setCountry("French")
-                        ->setAnime(true);
+                        ->setAnime(true)
+                        ->setMedia('film');
                         
     }
 
@@ -29,23 +30,23 @@ class FilmUnitTest extends TestCase
     }
 
     /**
-     * Test la validité de l'id de TMDB
-     */
-    public function testValidIdFilmTmdb(){
-        $this->assertEquals(192304, $this->getFilm()->getIdTmdb());
-    }
-
-    /**
      * Test l'invalidité du titre
      */
     public function testInvalidTitle(){
         $this->assertNotEquals(192304, $this->getFilm()->getTitle());
     }
 
+     /**
+     * Test la validité de l'id de TMDB
+     */
+    public function testValidIdTmdb(){
+        $this->assertEquals(192304, $this->getFilm()->getIdTmdb());
+    }
+
     /**
      * Test l'invalidité de l'id de TMDB
      */
-    public function testInvalidIdFilmTmdb(){
+    public function testInvalidIdTmdb(){
         $this->assertNotEquals("The Witcher", $this->getFilm()->getIdTmdb());
     }
 
@@ -77,6 +78,20 @@ class FilmUnitTest extends TestCase
         $this->assertFalse(false);
     }
 
+     /**
+     * Test la validité du pays
+     */
+    public function testValidMedia(){
+        $this->assertEquals('film', $this->getFilm()->getMedia());
+    }
+
+    /**
+     * Test l'invalidité du pays
+     */
+    public function testInvalidMedia(){
+        $this->assertNotEquals(192304, $this->getFilm()->getMedia());
+    }
+
     /**
      * Test des champs vide
      */
@@ -88,5 +103,6 @@ class FilmUnitTest extends TestCase
         $this->assertEmpty($film->getStatue());
         $this->assertEmpty($film->getCountry());
         $this->assertEmpty($film->getAnime());
+        $this->assertEmpty($film->getMedia());
     }
 }

@@ -39,6 +39,10 @@ class Film
     #[ORM\Column(type: 'boolean')]
     private $anime;
 
+    #[ORM\Column(type: 'string', length: 10)]
+    #[Assert\NotBlank]
+    private $media;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -63,7 +67,7 @@ class Film
 
     public function setIdTmdb(int $idTmdb): self
     {
-        $this->idFilmTmdb = $idTmdb;
+        $this->idTmdb = $idTmdb;
 
         return $this;
     }
@@ -100,6 +104,18 @@ class Film
     public function setAnime(bool $anime): self
     {
         $this->anime = $anime;
+
+        return $this;
+    }
+
+    public function getMedia(): ?string
+    {
+        return $this->media;
+    }
+
+    public function setMedia(string $media): self
+    {
+        $this->media = $media;
 
         return $this;
     }

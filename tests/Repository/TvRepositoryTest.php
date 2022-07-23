@@ -16,26 +16,9 @@ class TvRepositoryTest extends KernelTestCase
     /**
      * Méthode pour chercher par titre
      */
-    public function testFindOneByTitle()
-    {
-        $tv = $this->getRepositoryTv(['title' => 'qui']);
-        $this->assertSame('qui', $tv->getTitle());
-    }
-
-    /**
-     * Methode pour chercher par id
-     */
     public function testFindOneByIdTmdb()
     {
-        $tv = $this->getRepositoryTv(['idTvTmdb' => '14']);
-        $this->assertSame(14, $tv->getIdTmdb());
-    }
-
-    /**
-     * Methode pour chercher par statue
-     */
-    public function testFindOneByStatue(){
-        $tv = $this->getRepositoryTv(['statue' => '41']);
-        $this->assertSame(41, $tv->getStatue()->getId());
+        $tv = $this->getRepositoryTv(['idTmdb' => 81]);
+        $this->assertSame(81, $tv->getIdTmdb());
     }
 }

@@ -17,7 +17,8 @@ class TvUnitTest extends TestCase
                         ->setIdTmdb(192304)
                         ->setStatue(new Statue())
                         ->setCountry("French")
-                        ->setAnime(true);
+                        ->setAnime(true)
+                        ->setMedia('tv');
                         
     }
 
@@ -29,17 +30,17 @@ class TvUnitTest extends TestCase
     }
 
     /**
-     * Test la validité de l'id de TMDB
-     */
-    public function testValidIdTvTmdb(){
-        $this->assertEquals(192304, $this->getTv()->getIdTmdb());
-    }
-
-    /**
      * Test l'invalidité du titre
      */
     public function testInvalidTitle(){
         $this->assertNotEquals(192304, $this->getTv()->getTitle());
+    }
+
+    /**
+     * Test la validité de l'id de TMDB
+     */
+    public function testValidIdTmdb(){
+        $this->assertEquals(192304, $this->getTv()->getIdTmdb());
     }
 
     /**
@@ -77,6 +78,19 @@ class TvUnitTest extends TestCase
         $this->assertFalse(false);
     }
 
+    /**
+     * Test la validité du pays
+     */
+    public function testValidMedia(){
+        $this->assertEquals("tv", $this->getTv()->getMedia());
+    }
+
+    /**
+     * Test l'invalidité du pays
+     */
+    public function testInvalidMedia(){
+        $this->assertNotEquals(192304, $this->getTv()->getMedia());
+    }
 
     /**
      * Test des champs vide
@@ -89,5 +103,6 @@ class TvUnitTest extends TestCase
         $this->assertEmpty($tv->getStatue());
         $this->assertEmpty($tv->getCountry());
         $this->assertEmpty($tv->getAnime());
+        $this->assertEmpty($tv->getMedia());
     }
 }

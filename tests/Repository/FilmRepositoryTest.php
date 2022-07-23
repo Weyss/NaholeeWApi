@@ -14,29 +14,13 @@ class FilmRepositoryTest extends KernelTestCase
         return static::getContainer()->get(FilmRepository::class)->findOneBy($criteria);
     }
 
-    /**
-     * Méthode pour chercher par titre
-     */
-    public function testFindOneByTitle()
-    {
-        $film = $this->getRepositoryFilm(['title' => 'facilis']);
-        $this->assertSame('facilis', $film->getTitle());
-    }
-
-    /**
-     * Methode pour chercher par id
+   /**
+     * Méthode pour chercher par id 
      */
     public function testFindOneByIdTmdb()
     {
-        $film = $this->getRepositoryFilm(['idFilmTmdb' => '21']);
-        $this->assertSame(21, $film->getIdTmdb());
+        $tv = $this->getRepositoryFilm(['idTmdb' => 1]);
+        $this->assertSame(1, $tv->getIdTmdb());
     }
 
-    /**
-     * Methode pour chercher par statue
-     */
-    public function testFindOneByStatue(){
-        $film = $this->getRepositoryFilm(['statue' => '41']);
-        $this->assertSame(41, $film->getStatue()->getId());
-    }
 }

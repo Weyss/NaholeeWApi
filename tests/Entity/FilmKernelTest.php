@@ -17,7 +17,8 @@ class FilmKernelTest extends KernelTestCase
         return (new Film)->setTitle("The Witcher")
                          ->setIdTmdb(192304)
                          ->setCountry("French")
-                         ->setAnime(true);
+                         ->setAnime(true)
+                         ->setMedia('film');
     }
 
     /**
@@ -117,4 +118,17 @@ class FilmKernelTest extends KernelTestCase
         $this->assertErrors(0, $this->getFilm()->setAnime(false));
     }
 
+    /**
+     * Test si le media est null
+     */
+    public function testInvalidBlankMedia(){
+        $this->assertErrors(1, $this->getFilm()->setMedia(''));
+    }
+
+    /**
+     * Test si le media n'est pas une chaine de caractère
+     */
+    public function testInvalidTypeMedia(){
+        $this->assertIsNotString($this->getFilm()->setMedia(192304));
+    }
 }

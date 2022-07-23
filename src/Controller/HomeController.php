@@ -84,7 +84,7 @@ class HomeController extends AbstractController
         return $this->render('/detail/detail-tv.html.twig', [
             'form' => $this->searchBar(),
             'data' => $api->getDetailInfoTv($id),
-            'isInDatabase' => $tvRepo->findOneBy(['idTvTmdb' => $id]),
+            'isInDatabase' => $tvRepo->findOneBy(['idTmdb' => $id]),
             'formTv' => $form->createView()
         ]);
     }
@@ -161,7 +161,7 @@ class HomeController extends AbstractController
                 }
 
                 /** @var Tv $tv */
-                $tv = $tvRepo->findOneBy(['idTvTmdb' => $id]);
+                $tv = $tvRepo->findOneBy(['idTmdb' => $id]);
 
                 if(!$tv){
                     $tv = (new Tv())->setTitle($api->getDetailInfoTv($id)['name'])
@@ -204,7 +204,7 @@ class HomeController extends AbstractController
                 }
 
                 /** @var Film $film */
-                $film = $filmRepo->findOneBy(['idFilmTmdb' => $id]);
+                $film = $filmRepo->findOneBy(['idTmdb' => $id]);
 
                 if(!$film){
                     $film = (new Film())->setTitle($api->getDetailInfoFilm($id)['title'])
