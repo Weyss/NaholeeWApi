@@ -3,6 +3,7 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Tv;
+use App\Entity\Statue;
 use PHPUnit\Framework\TestCase;
 
 class TvUnitTest extends TestCase
@@ -13,7 +14,11 @@ class TvUnitTest extends TestCase
     public function getTv(): Tv
     {
        return (new Tv)->setTitle("Rugal")
-                        ->setIdTvTmdb(192304);
+                        ->setIdTmdb(192304)
+                        ->setStatue(new Statue())
+                        ->setCountry("French")
+                        ->setAnime(true)
+                        ->setMedia('tv');
                         
     }
 
@@ -25,13 +30,6 @@ class TvUnitTest extends TestCase
     }
 
     /**
-     * Test la validité de l'id de TMDB
-     */
-    public function testValidIdTvTmdb(){
-        $this->assertEquals(192304, $this->getTv()->getIdTvTmdb());
-    }
-
-    /**
      * Test l'invalidité du titre
      */
     public function testInvalidTitle(){
@@ -39,10 +37,59 @@ class TvUnitTest extends TestCase
     }
 
     /**
+     * Test la validité de l'id de TMDB
+     */
+    public function testValidIdTmdb(){
+        $this->assertEquals(192304, $this->getTv()->getIdTmdb());
+    }
+
+    /**
      * Test l'invalidité de l'id de TMDB
      */
     public function testInvalidIdTvTmdb(){
-        $this->assertNotEquals("Rugal", $this->getTv()->getIdTvTmdb());
+        $this->assertNotEquals("Rugal", $this->getTv()->getIdTmdb());
+    }
+
+    /**
+     * Test la validité du pays
+     */
+    public function testValidCountry(){
+        $this->assertEquals("French", $this->getTv()->getCountry());
+    }
+
+    /**
+     * Test l'invalidité du pays
+     */
+    public function testInvalidCountry(){
+        $this->assertNotEquals(192304, $this->getTv()->getCountry());
+    }
+
+    /**
+     * Test la valeur boolean "true" pour un anime
+     */
+    public function testTrueValueAnime(){
+        $this->assertTrue(true);
+    }
+
+    /**
+     * Test la valeur boolean "false" pour un anime
+     */
+    public function testFalseValueAnime(){
+        $this->assertFalse(false);
+    }
+
+    /**
+     * Test la validité du pays
+     */
+    public function testValidMedia(){
+        $this->assertEquals("tv", $this->getTv()->getMedia());
+    }
+
+    /**
+     * Test l'invalidité du pays
+     */
+    public function testInvalidMedia(){
+        $this->assertNotEquals(192304, $this->getTv()->getMedia());
     }
 
     /**
@@ -52,6 +99,10 @@ class TvUnitTest extends TestCase
         $tv = new Tv();
 
         $this->assertEmpty($tv->getTitle());
-        $this->assertEmpty($tv->getIdTvTmdb());
+        $this->assertEmpty($tv->getIdTmdb());
+        $this->assertEmpty($tv->getStatue());
+        $this->assertEmpty($tv->getCountry());
+        $this->assertEmpty($tv->getAnime());
+        $this->assertEmpty($tv->getMedia());
     }
 }

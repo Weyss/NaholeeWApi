@@ -25,10 +25,23 @@ class Film
     #[ORM\Column(type: 'integer')]
     #[Assert\NotBlank]
     #[Assert\Type('integer')]
-    private $idFilmTmdb;
+    private $idTmdb;
 
     #[ORM\ManyToOne(targetEntity: Statue::class, inversedBy: 'film')]
     private $statue;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\Length(
+        max: 255
+    )]
+    private $country;
+
+    #[ORM\Column(type: 'boolean')]
+    private $anime;
+
+    #[ORM\Column(type: 'string', length: 10)]
+    #[Assert\NotBlank]
+    private $media;
 
     public function getId(): ?int
     {
@@ -47,14 +60,14 @@ class Film
         return $this;
     }
 
-    public function getIdFilmTmdb(): ?int
+    public function getIdTmdb(): ?int
     {
-        return $this->idFilmTmdb;
+        return $this->idTmdb;
     }
 
-    public function setIdFilmTmdb(int $idFilmTmdb): self
+    public function setIdTmdb(int $idTmdb): self
     {
-        $this->idFilmTmdb = $idFilmTmdb;
+        $this->idTmdb = $idTmdb;
 
         return $this;
     }
@@ -67,6 +80,42 @@ class Film
     public function setStatue(?Statue $statue): self
     {
         $this->statue = $statue;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?string $country): self
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    public function getAnime(): ?bool
+    {
+        return $this->anime;
+    }
+
+    public function setAnime(bool $anime): self
+    {
+        $this->anime = $anime;
+
+        return $this;
+    }
+
+    public function getMedia(): ?string
+    {
+        return $this->media;
+    }
+
+    public function setMedia(string $media): self
+    {
+        $this->media = $media;
 
         return $this;
     }

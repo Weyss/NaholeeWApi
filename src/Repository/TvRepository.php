@@ -19,32 +19,22 @@ class TvRepository extends ServiceEntityRepository
         parent::__construct($registry, Tv::class);
     }
 
-    // /**
-    //  * @return Tv[] Returns an array of Tv objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Méthodes pour rechercher des series en fonction du statue
+     * demandé
+     * 
+     * @param string $statue
+     *
+     * @return Tv[]
+     */
+    public function findTvByStatue(string $statue): array
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('t')
+            ->innerJoin('t.statue', 's', 'WITH', 's.id = t.statue')
+            ->where('s.statue = :statue')
+            ->setParameter('statue', $statue)
+            ->orderBy('t.title', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getArrayResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Tv
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -7,20 +7,21 @@ function subMenu() {
 
     mouseEnter$
     .subscribe(e => {
-       let target = e.target
-       
+       const target = e.target
+       const data = target.getAttribute('data-category');
+
         if(target.children.length < 1){
             // Création des éléments pour le sous-menu
             let ul = document.createElement('ul');
-            let livu = document.createElement('li');
-            let livoir = document.createElement('li');
-            let avu = document.createElement('a');
-            let avoir = document.createElement('a');
-
-            target.appendChild(ul).appendChild(livu).appendChild(avu).setAttribute('href', '{{ patch(\'vu\') }}');
-            avu.innerText = 'Vu';
-            target.appendChild(ul).appendChild(livoir).appendChild(avoir).setAttribute('href', '{{ patch(\'avoir\') }}');
-            avoir.innerText = 'A Voir';
+            let liSeen = document.createElement('li');
+            let liToSee = document.createElement('li');
+            let aSeen = document.createElement('a');
+            let aToSee = document.createElement('a');
+            
+            target.appendChild(ul).appendChild(liSeen).appendChild(aSeen).setAttribute('href', '/results/seen/' + data);
+            aSeen.innerText = 'Vu';
+            target.appendChild(ul).appendChild(liToSee).appendChild(aToSee).setAttribute('href', '/results/tosee/' + data);
+            aToSee.innerText = 'A Voir';
         }
         
         e.stopPropagation();  
@@ -72,10 +73,11 @@ document.addEventListener('DOMContentLoaded', subMenu);
 //     let avoir = document.createElement('a');
 
 //     target.classList.add("js-actived");
+//     const data = target.getAttribute('data-category');
  
-//     target.appendChild(ul).appendChild(livu).appendChild(avu).setAttribute('href', '{{ patch(\'vu\') }}');
+//     target.appendChild(ul).appendChild(livu).appendChild(avu).setAttribute('href',"/results/seen/" + data);
 //     avu.innerText = 'Vu';
-//     target.appendChild(ul).appendChild(livoir).appendChild(avoir).setAttribute('href', '{{ patch(\'avoir\') }}');
+//     target.appendChild(ul).appendChild(livoir).appendChild(avoir).setAttribute('href', "/results/tosee/" + data);
 //     avoir.innerText = 'A Voir';
 
 //     return target;

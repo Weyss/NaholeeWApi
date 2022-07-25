@@ -164,12 +164,10 @@ nav ul:first-child {
 }
 nav ul:first-child li {
   cursor: pointer;
-<<<<<<< HEAD
-=======
-}
-nav ul:first-child li a {
->>>>>>> 31833efc2c542d688d50b6df81da23f83dd11365
   font-size: 1.4rem;
+}
+nav ul:first-child li ul {
+  display: block;
 }
 nav ul:first-child li ul li a {
   font-size: 1.1rem;
