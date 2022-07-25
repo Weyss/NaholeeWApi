@@ -239,7 +239,7 @@ class HomeController extends AbstractController
      */
     public function resultsSeen(string $type, StatueRepository $statueRepo, FilmRepository $filmRepo, TvRepository $tvRepo): Response
     {
-
+        
         return $this->render('/results.html.twig', [
             'form' => $this->searchBar(),
             'results' => $this->results('Vu', $type, $statueRepo, $filmRepo, $tvRepo)

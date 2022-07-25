@@ -17,10 +17,10 @@ function subMenu() {
             let liToSee = document.createElement('li');
             let aSeen = document.createElement('a');
             let aToSee = document.createElement('a');
-
-            target.appendChild(ul).appendChild(liSeen).appendChild(aSeen).setAttribute('href', 'results/seen/' + data);
+            
+            target.appendChild(ul).appendChild(liSeen).appendChild(aSeen).setAttribute('href', '/results/seen/' + data);
             aSeen.innerText = 'Vu';
-            target.appendChild(ul).appendChild(liToSee).appendChild(aToSee).setAttribute('href', 'results/tosee/' + data);
+            target.appendChild(ul).appendChild(liToSee).appendChild(aToSee).setAttribute('href', '/results/tosee/' + data);
             aToSee.innerText = 'A Voir';
         }
         
@@ -75,9 +75,9 @@ document.addEventListener('DOMContentLoaded', subMenu);
 //     target.classList.add("js-actived");
 //     const data = target.getAttribute('data-category');
  
-//     target.appendChild(ul).appendChild(livu).appendChild(avu).setAttribute('href',"/results/vu/" + data);
+//     target.appendChild(ul).appendChild(livu).appendChild(avu).setAttribute('href',"/results/seen/" + data);
 //     avu.innerText = 'Vu';
-//     target.appendChild(ul).appendChild(livoir).appendChild(avoir).setAttribute('href', '{{ patch(\'avoir\') }}');
+//     target.appendChild(ul).appendChild(livoir).appendChild(avoir).setAttribute('href', "/results/tosee/" + data);
 //     avoir.innerText = 'A Voir';
 
 //     return target;

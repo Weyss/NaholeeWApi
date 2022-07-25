@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('css/search.css') }}">
+<link rel="stylesheet" href="{{ asset('css/detail.css') }}">
 {% endblock %}
 
 {% block body %}
 <main>
     <h2>Résultats</h2>
     <ul>
-        {% for result in results %}
-        <li><a href="{{ path('detail_'~ result.media, {id:result.id_tmdb}) }}">{{ result.title }}</a></li>
-        {% endfor %}
+    {% for result in results %}
+        <li><a href="{{ path('detail_'~ result.media, {id:result.idTmdb}) }}">{{ result.title }}</a></li>
+    {% endfor %}
     </ul>
 </main>
 {% endblock %}

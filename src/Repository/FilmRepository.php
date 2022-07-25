@@ -35,6 +35,6 @@ class FilmRepository extends ServiceEntityRepository
             ->setParameter('statue', $statue)
             ->orderBy('f.title', 'ASC')
             ->getQuery()
-            ->getResult();
+            ->getArrayResult();
     }
 }

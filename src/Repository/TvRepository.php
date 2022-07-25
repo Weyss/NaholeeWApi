@@ -35,6 +35,6 @@ class TvRepository extends ServiceEntityRepository
             ->setParameter('statue', $statue)
             ->orderBy('t.title', 'ASC')
             ->getQuery()
-            ->getResult();
+            ->getArrayResult();
     }
 }

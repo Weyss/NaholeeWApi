@@ -33,9 +33,9 @@ class StatueRepository extends ServiceEntityRepository
 
         $sql = '
                 SELECT * FROM statue s
-                INNER JOIN (SELECT f.statue_id, f.title, f.country, f.id_tmdb, f.media FROM film f
+                INNER JOIN (SELECT f.statue_id, f.title, f.country, f.id_tmdb AS idTmdb, f.media FROM film f
                             UNION
-                            SELECT t.statue_id, t.title, t.country, t.id_tmdb, t.media FROM tv t) 
+                            SELECT t.statue_id, t.title, t.country, t.id_tmdb AS idTmdb, t.media FROM tv t) 
                             AS results ON s.id = results.statue_id
                 WHERE s.statue = :statue
                 AND results.country LIKE :country
@@ -52,9 +52,9 @@ class StatueRepository extends ServiceEntityRepository
 
         $sql = '
                 SELECT * FROM statue s
-                INNER JOIN (SELECT f.statue_id, f.title, f.anime, f.id_tmdb, f.media FROM film f
+                INNER JOIN (SELECT f.statue_id, f.title, f.anime, f.id_tmdb AS idTmdb, f.media FROM film f
                             UNION
-                            SELECT t.statue_id, t.title, t.anime, t.id_tmdb, t.media FROM tv t) 
+                            SELECT t.statue_id, t.title, t.anime, t.id_tmdb AS idTmdb, t.media FROM tv t) 
                             AS results ON s.id = results.statue_id
                 WHERE s.statue = :statue
                 AND results.anime = 1
