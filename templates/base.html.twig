@@ -20,6 +20,7 @@
                 {{ form_widget(form.recherche) }}
             {{form_end(form)}}
 
+        {% if is_granted('ROLE_ADMIN') %}
             <nav>
                 <ul>
                     <li class="category" data-category="kr">Coréen</li>
@@ -31,6 +32,7 @@
                     <li class="category" data-category="film">Films</li>
                 </ul>
             </nav>
+        {% endif %}  
         </header>
             
         {% block body %}{% endblock %}

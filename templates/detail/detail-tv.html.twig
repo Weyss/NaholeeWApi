@@ -11,6 +11,7 @@
 
         <div>
             {# <span id="js-info"></span> #}
+        {% if is_granted('ROLE_ADMIN') %}
             {{form_start(formTv)}}
                 {% if isInDatabase == null %}
                     {{form_row(formTv.statue[1])}}
@@ -23,6 +24,7 @@
                     {{form_row(formTv.statue[2], {'attr': {'checked':'checked'}})}}
                 {% endif %}
             {{form_start(formTv)}}
+        {% endif %}  
         </div>
 
         <p>{{ data.overview }}</p>

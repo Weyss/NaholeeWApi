@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Tv;
 use App\Entity\Film;
+use App\Entity\User;
 use App\Form\TvType;
 use App\Entity\Statue;
 use App\Form\FilmType;
@@ -20,6 +21,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class HomeController extends AbstractController
 {
@@ -105,7 +108,7 @@ class HomeController extends AbstractController
                 'id' => $id
             ])
         ]);
-        
+        // dd($form->createView());
         return $this->render('/detail/detail-film.html.twig', [
             'form' => $this->searchBar(),
             'data' => $api->getDetailInfoFilm($id),
@@ -325,5 +328,24 @@ class HomeController extends AbstractController
                 return  $filmRepo->findFilmByStatue($statue);
             break;
         }
+    }
+
+    #[Route('/login', name: 'app_login')]
+    public function login(AuthenticationUtils $authenticationUtils): Response
+    {
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        return $this->render('login.html.twig', [
+            'form' => $this->searchBar(),
+            'error'         => $error,
+        ]);
+    }
+
+    #[Route('/logout', name: 'app_logout')]
+    public function logout()
+    {
+        // controller can be blank: it will never be called!
+        throw new \Exception('Don\'t forget to activate logout in security.yaml');
     }
 }
