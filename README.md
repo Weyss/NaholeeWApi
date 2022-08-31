@@ -1,13 +1,12 @@
 # NaholeeWApi
 
-Application web pour ma femme, utilisant une API.
-Cette application permettra de lister les films/series qui seront :
+Application web pour ma femme, utilisant une API fourni par le site TMDB
+Elle permettra de lister les films/series qui seront :
   * A voir
   * Vu
-
+-----
 ## Environnement de développement
-
-### Pré-requis
+  * Symfony 5.4
   * pHp 8.0.13
   * Composer
   * Symfony CLI
@@ -16,49 +15,41 @@ Cette application permettra de lister les films/series qui seront :
   * pHpUnit
   * Panther
 
-## Lancer l'environnement de développement
-
-### Création du projet
-```bash 
-symfony new project_name --version=5.4 --full
-symfony serve -d
-```
-
-### Récupération du projet
+## Récupération du projet
+Pour récupérer le projet:  
 ```bash
-https://github.com/Weyss/NaholeeWApi.git
+git clone https://github.com/Weyss/NaholeeWApi.git
+```
+Ou bien se rendre sur la page Git du projet : [NaholeeWApi](https://github.com/Weyss/NaholeeWApi.git).
+
+Et n'oublier pas n'installer les _dépendances_ :
+```bash
 composer install
+```
+Dans le doute, vous pouvez les mettre à jour :
+```bash
 composer self:update
 ```
+## Fixtures
+Le projet utilise le système de [Fixture](https://symfony.com/bundles/DoctrineFixturesBundle/current/index.html) afin d'avoir un jeu de données
+qui permettront de tester ce dernier.
 
-## Ajouter des fixtures
-```bash
-composer require --dev orm-fixture
-composer require fzaninotto/faker
-```
+Le choix s'est porté sur [fzaninotto/faker](https://fakerphp.github.io/).
 
 ## Lancer des tests
-### Installation des tests
-#### Test unitaire & fonctionnel
+### Liens utiles
+Voici des liens permettants de se familariser avec les tests : 
+	- [Documetation Symfony](https://symfony.com/doc/5.4/testing.html#types-of-tests)
+	- [Documentation pHpUnit](https://phpunit.readthedocs.io/en/9.5/) 
+	- [Documentation Panther](https://github.com/symfony/panther)
+### Test unitaire & fonctionnel
 ```bash
-symfony php bin/phpunit
+symfony php bin/phpunit --filter <nom_du_fichier_de_test> --testdox
 ```
-#### Test E2E
-```bash
-composer req --dev symfony/panther
-vendor/bin/bdi detect drivers <folder_directory>
-```
-
-### Lancement tests unitaire et fonctionnel
-```bash 
-symfony php bin/phpunit
-```
-
-### Lancement tests E2E
+### Test E2E
 ```bash
 env PANTHER_NO_HEADLESS=1 symfony php bin/phpunit
 ```
-
 ### Coverage Code
 ```bash
 XDEBUG_MODE=coverage symfony php bin/phpunit --coverage-html <folder_directory>
