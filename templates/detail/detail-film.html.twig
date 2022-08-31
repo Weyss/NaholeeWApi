@@ -8,7 +8,8 @@
 <main>
     <article>
         <h2>{{ data.title }}</h2>
-
+        
+        {% if is_granted('ROLE_ADMIN') %}
         <div>
             {# <span id="js-info"></span> #}
             {{form_start(formFilm)}}
@@ -24,7 +25,7 @@
                 {% endif %}
             {{form_start(formFilm)}}
         </div>
-            
+        {% endif %}  
         <p>{{ data.overview }}</p>
 
         <ul id="genre">
